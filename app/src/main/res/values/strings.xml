@@ -1,3 +1,81 @@
 <resources>
-    <string name="app_name">TravelAndSearch</string>
+    <string name="app_name">Places Search</string>
+
+    <string-array name="tabsArray">
+        <item>Search</item>
+        <item>Favorites</item>
+    </string-array>
+
+    <string-array name="categoryArray">
+        <item>Default</item>
+        <item>Airport</item>
+        <item>Amusement Park</item>
+        <item>Aquarium</item>
+        <item>Art Gallery</item>
+
+        <item>Bakery</item>
+        <item>Bar</item>
+        <item>Beauty Salon</item>
+        <item>Bowling Alley</item>
+        <item>Bus Station</item>
+
+        <item>Cafe</item>
+        <item>Campground</item>
+        <item>Car Rental</item>
+        <item>Casino</item>
+
+        <item>Lodging</item>
+        <item>Movie Theater</item>
+        <item>Museum</item>
+        <item>Night Club</item>
+        <item>Park</item>
+        <item>Parking</item>
+        <item>Restaurant</item>
+        <item>Shopping Mall</item>
+        <item>Stadium</item>
+        <item>Subway Station</item>
+        <item>Taxi Stand</item>
+
+        <item>Train Station</item>
+        <item>Transit Station</item>
+        <item>Travel Agency</item>
+        <item>Zoo</item>
+    </string-array>
+
+    <string-array name="categoryValueArray">
+        <item>airport</item>
+        <item>amusement_park</item>
+        <item>aquarium</item>
+        <item>art_gallery</item>
+
+        <item>bakery</item>
+        <item>bar</item>
+        <item>beauty_salon</item>
+        <item>bowling_alley</item>
+        <item>bus_station</item>
+
+        <item>cafe</item>
+        <item>campground</item>
+        <item>car_rental</item>
+        <item>casino</item>
+
+        <item>lodging</item>
+        <item>movie_theater</item>
+        <item>museum</item>
+        <item>night_club</item>
+        <item>park</item>
+        <item>parking</item>
+        <item>restaurant</item>
+        <item>shopping_mall</item>
+        <item>stadium</item>
+        <item>subway_station</item>
+        <item>taxi_stand</item>
+
+        <item>train_station</item>
+        <item>transit_station</item>
+        <item>travel_agency</item>
+        <item>zoo</item>
+    </string-array>
+
+
 </resources>

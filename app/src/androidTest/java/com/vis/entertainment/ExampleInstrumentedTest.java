@@ -1,4 +1,4 @@
-package com.vis.travelandsearch;
+package com.vis.entertainment;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

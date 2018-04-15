@@ -1,4 +1,4 @@
-package com.vis.travelandsearch;
+package com.vis.entertainment;
 
 import org.junit.Test;
 
