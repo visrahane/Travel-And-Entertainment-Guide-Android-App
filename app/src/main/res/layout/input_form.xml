@@ -7,17 +7,16 @@
     tools:context="com.vis.entertainment.activity.MainActivity">
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/fromLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1.90"
-        android:text="From"
-        android:layout_marginTop="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/editText3"
         android:layout_marginStart="7dp"
-        tools:layout_constraintLeft_creator="1"
+        android:layout_marginLeft="7dp"
+        android:text="From"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="0dp" />
+        app:layout_constraintTop_toBottomOf="@+id/distanceTxt"
+        tools:layout_constraintLeft_creator="1" />
 
     <TextView
         android:id="@+id/distanceLbl"
@@ -37,24 +36,22 @@
         android:id="@+id/keywordLbl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="16dp"
         android:layout_weight="1.90"
         android:text="Keyword"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="7dp"
-        tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="7dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:visibility="visible" />
 
     <EditText
         android:id="@+id/keywordTxt"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_height="51dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="0dp"
         android:layout_weight="1"
         android:ems="10"
         android:hint="Enter keyword"
@@ -103,10 +100,11 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/categoryLbl"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/distanceTxt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -125,41 +123,51 @@
         tools:layout_constraintTop_creator="1"
         android:layout_marginTop="0dp" />
 
-    <RadioButton
-        android:id="@+id/currentLocationRadioBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Current Location"
-        app:layout_constraintTop_toBottomOf="@+id/textView7"
-        android:layout_marginStart="16dp"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="0dp" />
+    <RadioGroup
 
-    <RadioButton
-        android:id="@+id/otherLocationRadioBtn"
+        android:id="@+id/fromRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Other, Specify Location"
-        app:layout_constraintTop_toBottomOf="@+id/currentLocationRadioBtn"
-        android:layout_marginStart="16dp"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="0dp" />
+        app:layout_constraintTop_toBottomOf="@id/fromLbl">
+
+        <RadioButton
+            android:id="@+id/currentLocationRadioBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Current Location"
+            tools:layout_constraintLeft_creator="1"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="16dp"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="227dp" />
+
+        <RadioButton
+            android:id="@+id/otherLocationRadioBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="0dp"
+            android:text="Other, Specify Location"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/currentLocationRadioBtn"
+            tools:layout_constraintLeft_creator="1" />
+    </RadioGroup>
 
     <AutoCompleteTextView
-        android:id="@+id/autoCompleteTextView2"
-        android:layout_width="0dp"
-        android:layout_height="41dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="0dp"
+        android:id="@+id/locationTxt"
+        android:layout_width="334dp"
+        android:layout_height="39dp"
+        android:layout_marginLeft="43dp"
+        android:layout_marginStart="43dp"
         android:hint="Type in the location"
-        app:layout_constraintLeft_toLeftOf="@+id/otherLocationRadioBtn"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/otherLocationRadioBtn" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/distanceTxt"
+        app:layout_constraintTop_toBottomOf="@+id/fromRadioGroup"
+        android:layout_marginTop="0dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginRight="0dp" />
 
     <Button
         android:id="@+id/searchBtn"
@@ -168,15 +176,16 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="8dp"
         android:text="Search"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/clearBtn"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView2"
+        app:layout_constraintTop_toBottomOf="@+id/locationTxt"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintLeft_creator="1" />
+        tools:layout_constraintLeft_creator="1"
+        android:onClick="onClickSearchBtn"/>
 
     <Button
         android:id="@+id/clearBtn"
@@ -184,10 +193,21 @@
         android:layout_height="48dp"
         android:text="Clear"
         android:layout_marginTop="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView2"
+        app:layout_constraintTop_toBottomOf="@+id/locationTxt"
         tools:layout_constraintRight_creator="1"
-        android:layout_marginEnd="16dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/resultsProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="8dp" />
+        app:layout_constraintTop_toBottomOf="@+id/distanceTxt" />
 
 </android.support.constraint.ConstraintLayout>

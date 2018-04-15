@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Places Search</string>
+    <!--Server urls -->
+    <string name="searchResultUri">http://webtechtravel-env.us-east-2.elasticbeanstalk.com/searchResults?</string>
+    <string name="nextResultUri">http://webtechtravel-env.us-east-2.elasticbeanstalk.com/nextSearchResults?</string>
+    <string name="yelpReviewUri">http://webtechtravel-env.us-east-2.elasticbeanstalk.com/yelpReviews?</string>
+
 
     <string-array name="tabsArray">
         <item>Search</item>
