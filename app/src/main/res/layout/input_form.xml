@@ -12,8 +12,12 @@
         android:layout_height="wrap_content"
         android:layout_weight="1.90"
         android:text="From"
-        tools:layout_editor_absoluteX="7dp"
-        tools:layout_editor_absoluteY="219dp" />
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/editText3"
+        android:layout_marginStart="7dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="0dp" />
 
     <TextView
         android:id="@+id/distanceLbl"
@@ -21,8 +25,13 @@
         android:layout_height="wrap_content"
         android:layout_weight="1.90"
         android:text="Distance (in miles)"
-        tools:layout_editor_absoluteX="7dp"
-        tools:layout_editor_absoluteY="144dp" />
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/categoryLbl"
+        android:layout_marginTop="144dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/categoryLbl" />
 
     <TextView
         android:id="@+id/keywordLbl"
@@ -30,8 +39,12 @@
         android:layout_height="wrap_content"
         android:layout_weight="1.90"
         android:text="Keyword"
-        tools:layout_editor_absoluteX="7dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="7dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="7dp" />
 
     <EditText
         android:id="@+id/keywordTxt"
@@ -41,95 +54,140 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="6dp"
         android:layout_weight="1"
         android:ems="10"
+        android:hint="Enter keyword"
         android:inputType="textPersonName"
-        android:text="Enter keyword"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="39dp" />
+        app:layout_constraintTop_toBottomOf="@+id/keywordLbl"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
     <TextView
         android:id="@+id/categoryLbl"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:text="Category"
-        tools:layout_editor_absoluteX="7dp"
-        tools:layout_editor_absoluteY="92dp" />
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        android:layout_marginStart="7dp"
+        app:layout_constraintBottom_toBottomOf="@+id/distanceLbl"
+        android:layout_marginTop="53dp"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="52dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/keywordTxt"
+        android:layout_marginLeft="7dp" />
 
     <Spinner
         android:id="@+id/categoryDropDown"
-        android:layout_width="368dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
 
         android:entries="@array/categoryArray"
         android:spinnerMode="dropdown"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="116dp" />
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/distanceLbl"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/categoryLbl"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <EditText
         android:id="@+id/editText3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginStart="8dp"
         android:ems="10"
+        android:hint="Enter Distance (default 10 miles)"
         android:inputType="textPersonName"
-        android:text="Enter Distance (default 10 miles)"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="169dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/distanceLbl"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginTop="0dp" />
 
     <RadioButton
         android:id="@+id/currentLocationRadioBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Current Location"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="239dp" />
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        android:layout_marginStart="16dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="0dp" />
 
     <RadioButton
         android:id="@+id/otherLocationRadioBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Other, Specify Location"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="278dp" />
+        app:layout_constraintTop_toBottomOf="@+id/currentLocationRadioBtn"
+        android:layout_marginStart="16dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="0dp" />
 
     <AutoCompleteTextView
         android:id="@+id/autoCompleteTextView2"
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:text="Type in the location"
-        app:layout_constraintLeft_toLeftOf="parent"
-        tools:layout_editor_absoluteY="321dp" />
+        android:layout_width="0dp"
+        android:layout_height="41dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="0dp"
+        android:hint="Type in the location"
+        app:layout_constraintLeft_toLeftOf="@+id/otherLocationRadioBtn"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/otherLocationRadioBtn" />
 
     <Button
         android:id="@+id/searchBtn"
-        android:layout_width="176dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginRight="8dp"
         android:text="Search"
-        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/clearBtn"
-        tools:layout_editor_absoluteY="364dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView2"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintLeft_creator="1" />
 
     <Button
         android:id="@+id/clearBtn"
         android:layout_width="176dp"
         android:layout_height="48dp"
         android:text="Clear"
-        tools:layout_editor_absoluteX="198dp"
-        tools:layout_editor_absoluteY="365dp" />
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextView2"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="8dp" />
 
 </android.support.constraint.ConstraintLayout>
