@@ -1,7 +1,14 @@
 package com.vis.entertainment.fragment;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,13 +28,20 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.vis.entertainment.R;
+import com.vis.entertainment.activity.MainActivity;
+
 /**
  * Created by Vis on 13-04-2018.
  */
 
 public class SearchFragment extends Fragment {
 
+
+    private MainActivity mainActivity;
     private  View view;
     private TextView keywordTxt;
     private TextView distanceTxt;
@@ -35,8 +49,17 @@ public class SearchFragment extends Fragment {
     private RadioGroup fromRadioGrp;
     private Spinner categorySpinner;
     private RequestQueue requestQueue;
-    private ProgressBar progressBar;
+   // private ProgressBar progressBar;
     private ProgressDialog progress;
+
+    @SuppressLint("ValidFragment")
+    public SearchFragment(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
+    }
+
+    public SearchFragment() {
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,7 +84,7 @@ public class SearchFragment extends Fragment {
         categorySpinner= (Spinner) view.findViewById(R.id.categoryDropDown);
         fromRadioGrp= (RadioGroup) view.findViewById(R.id.fromRadioGroup);
         requestQueue= Volley.newRequestQueue(this.getContext().getApplicationContext());
-        progressBar=view.findViewById(R.id.resultsProgressBar);
+        //progressBar=view.findViewById(R.id.resultsProgressBar);
 
         //
 
@@ -72,6 +95,7 @@ public class SearchFragment extends Fragment {
 
     }
 
+
     private void getResults() {
         //make a call to the server and fetch result
         String url=getResources().getString(R.string.searchResultUri);
@@ -81,15 +105,14 @@ public class SearchFragment extends Fragment {
                 .appendQueryParameter("category", categorySpinner.getSelectedItem().toString())
                 .appendQueryParameter("distance", distanceTxt.getText().toString().isEmpty()?"10":distanceTxt.getText().toString())
                 .appendQueryParameter("location", locationTxt.getText().toString().isEmpty()?"here":locationTxt.getText().toString())
-                .appendQueryParameter("latitude","34.029653")
-                .appendQueryParameter("longitude","-118.283130")
+                .appendQueryParameter("latitude",mainActivity.getLocation()!=null?Double.toString(mainActivity.getLocation().getLatitude()):"34.029653")
+                .appendQueryParameter("longitude",mainActivity.getLocation()!=null?Double.toString(mainActivity.getLocation().getLongitude()):"-118.283130")
                 .build();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, builtUri.toString(),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        progressBar.setVisibility(View.GONE);
                         progress.dismiss();
                         Log.d("Search Response is: ", response);
 
@@ -98,7 +121,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //error Message
-                progressBar.setVisibility(View.VISIBLE);
+                progress.dismiss();
                 Log.d("Search Response is: ", error.toString());
             }
         });

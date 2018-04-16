@@ -1,5 +1,6 @@
 package com.vis.entertainment.fragment;
 
+import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -8,6 +9,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.vis.entertainment.R;
+import com.vis.entertainment.activity.MainActivity;
 
 /**
  * Created by Vis on 13-04-2018.
@@ -16,10 +18,12 @@ import com.vis.entertainment.R;
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     private String tabs[];
+    private MainActivity mainActivity;
 
-    public ViewPagerAdapter(FragmentManager fm,Context context) {
+    public ViewPagerAdapter(FragmentManager fm,MainActivity mainActivity) {
         super(fm);
-        Resources res = context.getResources();
+        this.mainActivity=mainActivity;
+        Resources res = mainActivity.getResources();
         tabs= res.getStringArray(R.array.tabsArray);
     }
 
@@ -29,7 +33,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         Log.d("getTabItem", "getItem: "+position);
         if (position == 0)
         {
-            fragment = new SearchFragment();
+            fragment = new SearchFragment(this.mainActivity);
         }
         else if (position == 1)
         {
