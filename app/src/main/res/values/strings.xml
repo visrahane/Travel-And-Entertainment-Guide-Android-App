@@ -5,7 +5,21 @@
     <string name="nextResultUri">http://webtechtravel-env.us-east-2.elasticbeanstalk.com/nextSearchResults?</string>
     <string name="yelpReviewUri">http://webtechtravel-env.us-east-2.elasticbeanstalk.com/yelpReviews?</string>
 
+    <!--Pages Names -->
+    <string name="searchResultPageTitle">Search Results</string>
 
+    <!--Image urls-->
+    <string name="heartFillRedImgUrl">http://cs-server.usc.edu:45678/hw/hw9/images/android/heart_fill_red.xml</string>
+    <string name="heartFillWhiteImgUrl">http://cs-server.usc.edu:45678/hw/hw9/images/android/heart_fill_white.xml</string>
+    <string name="heartOutlineBlackImgUrl">http://cs-server.usc.edu:45678/hw/hw9/images/android/heart_outline_black.xml</string>
+    <string name="heartOutlineWhiteImgUrl">http://cs-server.usc.edu:45678/hw/hw9/images/android/heart_outline_white.xml</string>
+    <string name="infoOutlineImgUrl">http://cs-server.usc.edu:45678/hw/hw9/images/android/info_outline.xml</string>
+    <string name="mapsImgUrl">http://cs-server.usc.edu:45678/hw/hw9/images/android/maps.xml</string>
+    <string name="photosImgUrl">http://cs-server.usc.edu:45678/hw/hw9/images/android/photos.xml</string>
+    <string name="reviewImgUrl">http://cs-server.usc.edu:45678/hw/hw9/images/android/review.xml</string>
+    <string name="searchImgUrl">http://cs-server.usc.edu:45678/hw/hw9/images/android/search.xml</string>
+    <string name="shareImgUrl">http://cs-server.usc.edu:45678/hw/hw9/images/android/share.xml</string>
+    <!---->
     <string-array name="tabsArray">
         <item>Search</item>
         <item>Favorites</item>
@@ -81,6 +95,9 @@
         <item>travel_agency</item>
         <item>zoo</item>
     </string-array>
+    <string name="title_activity_details">DetailsActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 
 
 </resources>

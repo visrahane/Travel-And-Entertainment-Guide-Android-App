@@ -17,7 +17,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.vis.entertainment.R;
-import com.vis.entertainment.fragment.ViewPagerAdapter;
+import com.vis.entertainment.adapters.ViewPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,12 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
-        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),this);
-        viewPager.setAdapter(viewPagerAdapter);
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
+        setUpTabs();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
 
@@ -53,6 +48,22 @@ public class MainActivity extends AppCompatActivity {
             getUserLocation();
         }
     }
+
+    private void setUpTabs() {
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),this);
+        viewPager.setAdapter(viewPagerAdapter);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+        final int[] ICONS = new int[]{
+                R.drawable.search,
+                R.drawable.heart_fill_white,
+        };
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            tabLayout.getTabAt(i).setIcon(ICONS[i]);
+        }
+    }
+
     @SuppressLint("MissingPermission")
     private void getUserLocation() {
         mFusedLocationClient.getLastLocation()

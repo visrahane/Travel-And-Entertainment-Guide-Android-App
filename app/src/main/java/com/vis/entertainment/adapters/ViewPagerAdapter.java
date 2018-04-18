@@ -1,15 +1,15 @@
-package com.vis.entertainment.fragment;
+package com.vis.entertainment.adapters;
 
-import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.content.res.Resources;
-import android.content.Context;
 import android.util.Log;
 
 import com.vis.entertainment.R;
 import com.vis.entertainment.activity.MainActivity;
+import com.vis.entertainment.fragments.FavoriteFragment;
+import com.vis.entertainment.fragments.SearchFragment;
 
 /**
  * Created by Vis on 13-04-2018.
@@ -33,7 +33,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         Log.d("getTabItem", "getItem: "+position);
         if (position == 0)
         {
-            fragment = new SearchFragment(this.mainActivity);
+            fragment = new SearchFragment(mainActivity);
         }
         else if (position == 1)
         {

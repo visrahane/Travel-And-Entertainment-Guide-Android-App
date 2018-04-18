@@ -1,4 +1,4 @@
-package com.vis.entertainment.fragment;
+package com.vis.entertainment.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

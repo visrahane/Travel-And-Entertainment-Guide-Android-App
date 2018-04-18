@@ -1,14 +1,9 @@
-package com.vis.entertainment.fragment;
+package com.vis.entertainment.fragments;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.pm.PackageManager;
-import android.location.Location;
+import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -28,18 +22,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.vis.entertainment.R;
 import com.vis.entertainment.activity.MainActivity;
+import com.vis.entertainment.activity.SearchResultActivity;
+import com.vis.entertainment.constants.ApplicationConstants;
 
 /**
  * Created by Vis on 13-04-2018.
  */
 
 public class SearchFragment extends Fragment {
-
 
     private MainActivity mainActivity;
     private  View view;
@@ -112,10 +104,12 @@ public class SearchFragment extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
+                        // call new activity to show results
                         progress.dismiss();
                         Log.d("Search Response is: ", response);
-
+                        Intent intent = new Intent(mainActivity, SearchResultActivity.class);
+                        intent.putExtra(ApplicationConstants.SEARCH_DATA, response);
+                        startActivity(intent);
                     }
                 }, new Response.ErrorListener() {
             @Override
