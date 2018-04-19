@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -122,5 +125,16 @@ public class SearchFragment extends Fragment {
 
 // Add the request to the RequestQueue.
         requestQueue.add(stringRequest);
+    }
+    public void onClickLocation(View view){
+        RadioButton otherLocation=(RadioButton)view.findViewById(R.id.otherLocationRadioBtn);
+        EditText locationTxt;
+        locationTxt = (EditText)view.findViewById(R.id.locationTxt);
+        if(otherLocation.isChecked()){
+            locationTxt.setEnabled(true);
+        }
+        else{
+            locationTxt.setEnabled(false);
+        }
     }
 }

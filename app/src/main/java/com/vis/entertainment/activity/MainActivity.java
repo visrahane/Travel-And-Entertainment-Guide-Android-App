@@ -84,10 +84,5 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("GetLocation", "GetLocation: " );
             }
         });
-
-
     }
-
-
-
 }
