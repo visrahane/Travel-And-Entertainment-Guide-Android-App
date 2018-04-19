@@ -15,16 +15,16 @@ import com.vis.entertainment.fragments.SearchFragment;
  * Created by Vis on 13-04-2018.
  */
 
-public class ViewPagerAdapter extends FragmentPagerAdapter {
+public class HomePagerAdapter extends FragmentPagerAdapter {
 
     private String tabs[];
     private MainActivity mainActivity;
 
-    public ViewPagerAdapter(FragmentManager fm,MainActivity mainActivity) {
+    public HomePagerAdapter(FragmentManager fm, MainActivity mainActivity) {
         super(fm);
         this.mainActivity=mainActivity;
         Resources res = mainActivity.getResources();
-        tabs= res.getStringArray(R.array.tabsArray);
+        tabs= res.getStringArray(R.array.homeTabsArray);
     }
 
     @Override

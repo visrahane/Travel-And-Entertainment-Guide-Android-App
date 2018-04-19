@@ -2,7 +2,11 @@ package com.vis.entertainment.models;
 
 public class Result {
 
-    private String categoryImageUrl, name, address;
+    private String categoryImageUrl;
+    private String name;
+    private String address;
+
+    private String placeId;
 
     private boolean favorite;
 
@@ -12,9 +16,18 @@ public class Result {
         sb.append("categoryImageUrl='").append(categoryImageUrl).append('\'');
         sb.append(", name='").append(name).append('\'');
         sb.append(", address='").append(address).append('\'');
+        sb.append(", placeId='").append(placeId).append('\'');
         sb.append(", favorite=").append(favorite);
         sb.append('}');
         return sb.toString();
+    }
+
+    public String getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
     }
 
     public String getCategoryImageUrl() {

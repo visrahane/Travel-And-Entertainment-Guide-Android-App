@@ -17,13 +17,13 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.vis.entertainment.R;
-import com.vis.entertainment.adapters.ViewPagerAdapter;
+import com.vis.entertainment.adapters.HomePagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private ViewPagerAdapter viewPagerAdapter;
+    private HomePagerAdapter homePagerAdapter;
     private FusedLocationProviderClient mFusedLocationClient;
 
     public Location getLocation() {
@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpTabs() {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
-        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),this);
-        viewPager.setAdapter(viewPagerAdapter);
+        homePagerAdapter = new HomePagerAdapter(getSupportFragmentManager(),this);
+        viewPager.setAdapter(homePagerAdapter);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         final int[] ICONS = new int[]{
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Location location) {
                         // Got last known location. In some rare situations this can be null.
-                        Log.e("GetLocation", "onSuccess: " + location.getLatitude());
+                        //Log.e("GetLocation", "onSuccess: " + location.getLatitude());
 
                         if (location != null) {
                             Log.e("GetLocation", "GetLocation: " + location.getLatitude());

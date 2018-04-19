@@ -20,9 +20,16 @@
     <string name="searchImgUrl">http://cs-server.usc.edu:45678/hw/hw9/images/android/search.xml</string>
     <string name="shareImgUrl">http://cs-server.usc.edu:45678/hw/hw9/images/android/share.xml</string>
     <!---->
-    <string-array name="tabsArray">
+    <string-array name="homeTabsArray">
         <item>Search</item>
         <item>Favorites</item>
+    </string-array>
+
+    <string-array name="detailsTabsArray">
+        <item>Info</item>
+        <item>Photos</item>
+        <item>Map</item>
+        <item>Reviews</item>
     </string-array>
 
     <string-array name="categoryArray">

@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
+
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -25,7 +26,13 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.SearchResultActivity"
             android:label="@string/searchResultPageTitle"
+            android:parentActivityName=".activity.MainActivity"
             ></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDWBtO4XwwiZCwCDr6z2aK8rXZMuO0OTNM"/>
+
     </application>
 
 </manifest>
