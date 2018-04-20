@@ -87,13 +87,14 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
 
     private PlaceDetails prepareMyPlaceObj(Place place) {
         PlaceDetails placeDetails=new PlaceDetails();
-        placeDetails.setWebsiteUri(place.getWebsiteUri().toString());
-        placeDetails.setAddress(place.getAddress().toString());
-        placeDetails.setName(place.getName().toString());
-        placeDetails.setPhoneNo(place.getPhoneNumber().toString());
+        if(place.getWebsiteUri()!=null)placeDetails.setWebsiteUri(place.getWebsiteUri().toString());
+        if(place.getAddress()!=null)placeDetails.setAddress(place.getAddress().toString());
+        if(place.getName()!=null)placeDetails.setName(place.getName().toString());
+        if(place.getPhoneNumber()!=null)placeDetails.setPhoneNo(place.getPhoneNumber().toString());
         placeDetails.setPlaceId(place.getId());
         placeDetails.setRating(Float.toString(place.getRating()));
         placeDetails.setPriceLevel(Integer.toString(place.getPriceLevel()));
+        placeDetails.setLatLng(place.getLatLng());
         return placeDetails;
     }
 

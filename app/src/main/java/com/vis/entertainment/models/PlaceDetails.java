@@ -1,8 +1,12 @@
 package com.vis.entertainment.models;
 
-import android.net.Uri;
+
+
+import com.google.android.gms.maps.model.LatLng;
 
 public class PlaceDetails {
+
+    private LatLng latLng;
 
     private String placeId;
 
@@ -17,6 +21,14 @@ public class PlaceDetails {
     private String rating;
 
     private String websiteUri;
+
+    public LatLng getLatLng() {
+        return latLng;
+    }
+
+    public void setLatLng(LatLng latLng) {
+        this.latLng = latLng;
+    }
 
     public String getWebsiteUri() {
         return websiteUri;

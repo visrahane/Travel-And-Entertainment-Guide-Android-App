@@ -27,13 +27,14 @@ public class SearchResultActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search_results);
+        setContentView(R.layout.recycler_view);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
         String searchData = intent.getStringExtra(ApplicationConstants.SEARCH_DATA);
         //getActionBar().setTitle(this.getResources().getString(R.string.searchResultPageTitle));
         recyclerView = (RecyclerView) findViewById(R.id.searchResultsView);
 
-        resultAdapter = new SearchResultsAdapter(resultList);
+        resultAdapter = new SearchResultsAdapter(resultList,this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -53,6 +54,7 @@ public class SearchResultActivity extends AppCompatActivity {
                 result.setCategoryImageUrl(resultJson.getString("icon"));
                 result.setName(resultJson.getString("name"));
                 result.setAddress(resultJson.getString("vicinity"));
+                result.setPlaceId(resultJson.getString("place_id"));
                 resultList.add(result);
             }
         } catch (JSONException e) {

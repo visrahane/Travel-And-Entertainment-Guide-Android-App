@@ -52,20 +52,23 @@ public class DetailsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Fragment fragment = null;
+        Bundle args = new Bundle();
+        Gson gS = new Gson();
+        String data = gS.toJson(place);
         Log.d("getTabItem", "getItem: "+position);
         switch (position){
             case 0:fragment=fragmentList.get(position);
+                args.putString(ApplicationConstants.PLACE_DATA, data);
+                fragment.setArguments(args);
                 break;
             case 1:fragment=fragmentList.get(position);
-                Bundle args = new Bundle();
-                Gson gS = new Gson();
-                String data = gS.toJson(place);
                 args.putString(ApplicationConstants.PLACE_DATA, data);
-                //args.p;
                 fragment.setArguments(args);
             break;
-            case 2://fragment=fragmentList.get(position);break;
-            case 3:fragment=fragmentList.get(position);;break;
+            case 2:fragment=fragmentList.get(position);
+                args.putString(ApplicationConstants.PLACE_DATA, data);
+                fragment.setArguments(args);break;
+            case 3:fragment=fragmentList.get(position);break;
         }
 
         return fragment;

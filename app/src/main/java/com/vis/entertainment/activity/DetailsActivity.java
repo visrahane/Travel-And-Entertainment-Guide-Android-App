@@ -2,13 +2,21 @@ package com.vis.entertainment.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBufferResponse;
@@ -36,7 +44,8 @@ public class DetailsActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private DetailsPagerAdapter detailsPagerAdapter;
     private GeoDataClient geoDataClient;
-    private final List<Bitmap> photoBitmapList=new ArrayList<>();
+    private final List<Bitmap> photoBitmapList = new ArrayList<>();
+    private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,16 +54,45 @@ public class DetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String placeData = intent.getStringExtra(ApplicationConstants.PLACE_DATA);
         Gson gson = new Gson();
-        PlaceDetails place=gson.fromJson(placeData, PlaceDetails.class);
-        //PlaceDetails place= (PlaceDetails) intent.getSerializableExtra(ApplicationConstants.PLACE_DATA);
+        PlaceDetails place = gson.fromJson(placeData, PlaceDetails.class);
+        requestQueue = Volley.newRequestQueue(this);
 
         getPhotos(place);
+        getPlaceReviews(place);
         setUpTabs(place);
 
     }
+
+    private void getPlaceReviews(PlaceDetails place) {
+        {
+            //make a call to the server and fetch result
+            String url = getResources().getString(R.string.placeDetailsUri);
+            Uri builtUri = Uri.parse(url)
+                    .buildUpon()
+                    .appendQueryParameter("placeId", place.getPlaceId())
+                    .build();
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, builtUri.toString(),
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("", "Place Details response is: " + response);
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    //error Message
+                    Log.d("", "Place Details response is: " + error);
+                }
+            });
+
+// Add the request to the RequestQueue.
+            requestQueue.add(stringRequest);
+        }
+    }
+
     private void getPhotos(PlaceDetails place) {
 
-        geoDataClient= Places.getGeoDataClient(this);
+        geoDataClient = Places.getGeoDataClient(this);
         final Task<PlacePhotoMetadataResponse> photoMetadataResponse = geoDataClient.getPlacePhotos(place.getPlaceId());
         photoMetadataResponse.addOnCompleteListener(new OnCompleteListener<PlacePhotoMetadataResponse>() {
             @Override
@@ -64,7 +102,7 @@ public class DetailsActivity extends AppCompatActivity {
                 // Get the PlacePhotoMetadataBuffer (metadata for all of the photos).
                 PlacePhotoMetadataBuffer photoMetadataBuffer = photos.getPhotoMetadata();
                 // Get the first photo in the list.
-                for(PlacePhotoMetadata photoMetadata:photoMetadataBuffer){
+                for (PlacePhotoMetadata photoMetadata : photoMetadataBuffer) {
                     // Get the attribution text.
                     //CharSequence attribution = photoMetadata.getAttributions();
                     // Get a full-size bitmap for the photo.
@@ -85,7 +123,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     private void setUpTabs(PlaceDetails place) {
         viewPager = (ViewPager) findViewById(R.id.detailsPager);
-        detailsPagerAdapter = new DetailsPagerAdapter(getSupportFragmentManager(),this,place);
+        detailsPagerAdapter = new DetailsPagerAdapter(getSupportFragmentManager(), this, place);
         viewPager.setAdapter(detailsPagerAdapter);
         tabLayout = (TabLayout) findViewById(R.id.detailsTabs);
         tabLayout.setupWithViewPager(viewPager);

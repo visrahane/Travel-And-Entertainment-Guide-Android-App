@@ -134,11 +134,11 @@
             android:id="@+id/currentLocationRadioBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="16dp"
             android:checked="true"
             android:text="Current Location"
             tools:layout_constraintLeft_creator="1"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="16dp"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="227dp" />
 
@@ -160,14 +160,13 @@
         android:layout_width="334dp"
         android:layout_height="39dp"
         android:layout_marginLeft="43dp"
-        android:layout_marginStart="43dp"
+        android:enabled="false"
         android:hint="Type in the location"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="@+id/distanceTxt"
         app:layout_constraintTop_toBottomOf="@+id/fromRadioGroup"
-        android:layout_marginTop="0dp"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginRight="0dp" />
+        tools:enabled="false" />
 
     <Button
         android:id="@+id/searchBtn"
@@ -175,17 +174,14 @@
         android:layout_height="48dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="8dp"
+
         android:text="Search"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/clearBtn"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="0dp"
         app:layout_constraintTop_toBottomOf="@+id/locationTxt"
-        tools:layout_constraintRight_creator="1"
         tools:layout_constraintLeft_creator="1"
-        android:onClick="onClickSearchBtn"/>
+        tools:layout_constraintRight_creator="1" />
 
     <Button
         android:id="@+id/clearBtn"

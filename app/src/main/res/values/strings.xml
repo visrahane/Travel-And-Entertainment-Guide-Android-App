@@ -4,7 +4,7 @@
     <string name="searchResultUri">http://webtechtravel-env.us-east-2.elasticbeanstalk.com/searchResults?</string>
     <string name="nextResultUri">http://webtechtravel-env.us-east-2.elasticbeanstalk.com/nextSearchResults?</string>
     <string name="yelpReviewUri">http://webtechtravel-env.us-east-2.elasticbeanstalk.com/yelpReviews?</string>
-
+    <string name="placeDetailsUri">http://webtechtravel-env.us-east-2.elasticbeanstalk.com/placeDetails?</string>
     <!--Pages Names -->
     <string name="searchResultPageTitle">Search Results</string>
 
@@ -23,6 +23,25 @@
     <string-array name="homeTabsArray">
         <item>Search</item>
         <item>Favorites</item>
+    </string-array>
+
+    <string-array name="travelModeArray">
+        <item>Driving</item>
+        <item>Walking</item>
+        <item>Bicycling</item>
+        <item>Transit</item>
+    </string-array>
+
+    <string-array name="orderArray">
+        <item>Default Order</item>
+        <item>Highest Rating</item>
+        <item>Lowest Rating</item>
+        <item>Most Recent</item>
+        <item>Least Recent</item>
+    </string-array>
+    <string-array name="reviewArray">
+        <item>Google Reviews</item>
+        <item>Yelp Reviews</item>
     </string-array>
 
     <string-array name="detailsTabsArray">

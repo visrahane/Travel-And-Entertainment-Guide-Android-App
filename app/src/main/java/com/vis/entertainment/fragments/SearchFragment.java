@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -65,6 +67,16 @@ public class SearchFragment extends Fragment {
                 //progressBar.setVisibility(View.VISIBLE);
                 progress.show();
                 getResults();
+            }
+        });
+        RadioGroup radioGroup=view.findViewById(R.id.fromRadioGroup);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                switch(checkedId){
+                    case R.id.otherLocationRadioBtn:locationTxt.setEnabled(true);break;
+                    default:locationTxt.setEnabled(false);
+                }
             }
         });
         return view;
@@ -122,5 +134,16 @@ public class SearchFragment extends Fragment {
 
 // Add the request to the RequestQueue.
         requestQueue.add(stringRequest);
+    }
+    private void onClickLocation(View view){
+        RadioButton otherLocation=(RadioButton)view.findViewById(R.id.otherLocationRadioBtn);
+        EditText locationTxt;
+        locationTxt = (EditText)view.findViewById(R.id.locationTxt);
+        if(otherLocation.isChecked()){
+            locationTxt.setEnabled(true);
+        }
+        else{
+            locationTxt.setEnabled(false);
+        }
     }
 }

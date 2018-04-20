@@ -9,13 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.location.places.Place;
 import com.google.gson.Gson;
 import com.vis.entertainment.R;
 import com.vis.entertainment.adapters.PhotoResultsAdapter;
 import com.vis.entertainment.constants.ApplicationConstants;
 import com.vis.entertainment.models.PlaceDetails;
-import com.vis.entertainment.models.Result;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +26,7 @@ public class PhotosFragment extends BaseFragment  {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.search_results, container, false);
+        View view = inflater.inflate(R.layout.recycler_view, container, false);
         Gson gson=new Gson();
         place = gson.fromJson(getArguments().getString(ApplicationConstants.PLACE_DATA),PlaceDetails.class);
 
