@@ -23,6 +23,7 @@
         <activity
             android:name=".activity.DetailsActivity"
             android:label="@string/title_activity_details"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:parentActivityName=".activity.SearchResultActivity"/>
         <activity android:name=".activity.SearchResultActivity"
             android:label="@string/searchResultPageTitle"

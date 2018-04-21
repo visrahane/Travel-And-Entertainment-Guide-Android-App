@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PhotosFragment extends BaseFragment {
+    public static final String NO_PHOTOS = "No Photos";
     private List<Bitmap> photoList = new ArrayList<>();
     private RecyclerView recyclerView;
     private PhotoResultsAdapter resultAdapter;
@@ -32,9 +33,10 @@ public class PhotosFragment extends BaseFragment {
         Gson gson = new Gson();
         place = gson.fromJson(getArguments().getString(ApplicationConstants.PLACE_DATA), PlaceDetails.class);
         recyclerView =  view.findViewById(R.id.searchResultsView);
-        emptyView =  view.findViewById(R.id.noPhotosTxt);
+        emptyView =  view.findViewById(R.id.noRecordsTxt);
         if (photoList.isEmpty()) {
             recyclerView.setVisibility(View.GONE);
+            emptyView.setText(NO_PHOTOS);
             emptyView.setVisibility(View.VISIBLE);
         }
         else {

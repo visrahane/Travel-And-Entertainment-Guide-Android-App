@@ -9,7 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -46,15 +50,58 @@ public class DetailsActivity extends AppCompatActivity {
     private GeoDataClient geoDataClient;
     private final List<Bitmap> photoBitmapList = new ArrayList<>();
     private RequestQueue requestQueue;
+    private PlaceDetails place;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_share:
+                String url = getResources().getString(R.string.twitterUrl);
+                String text = "Check out " + place.getName() + " located at " + place.getAddress() + ". Website:";
+                String hashtagText = "TravelAndEntertainmentSearch";
+                String websiteUri=place.getWebsiteUri()!=null?place.getWebsiteUri():"www.google.com";
+                Uri builtUri = Uri.parse(url)
+                        .buildUpon()
+                        .appendQueryParameter("text", text)
+                        .appendQueryParameter("url",websiteUri)
+                        .appendQueryParameter("hashtags", hashtagText)
+                        .build();
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(builtUri.toString()));
+                startActivity(browserIntent);
+                return true;
+
+            case R.id.favourite:
+                // User chose the "Favorite" action, mark the current item
+                // as a favorite...
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+
         Intent intent = getIntent();
         String placeData = intent.getStringExtra(ApplicationConstants.PLACE_DATA);
         Gson gson = new Gson();
-        PlaceDetails place = gson.fromJson(placeData, PlaceDetails.class);
+        place = gson.fromJson(placeData, PlaceDetails.class);
         requestQueue = Volley.newRequestQueue(this);
         getSupportActionBar().setTitle((place.getName()));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
