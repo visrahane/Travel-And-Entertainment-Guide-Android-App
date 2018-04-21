@@ -110,12 +110,13 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     private void getPhotos(PlaceDetails place) {
-        try {
-            geoDataClient = Places.getGeoDataClient(this);
-            final Task<PlacePhotoMetadataResponse> photoMetadataResponse = geoDataClient.getPlacePhotos(place.getPlaceId());
-            photoMetadataResponse.addOnCompleteListener(new OnCompleteListener<PlacePhotoMetadataResponse>() {
-                @Override
-                public void onComplete(@NonNull Task<PlacePhotoMetadataResponse> task) {
+
+        geoDataClient = Places.getGeoDataClient(this);
+        final Task<PlacePhotoMetadataResponse> photoMetadataResponse = geoDataClient.getPlacePhotos(place.getPlaceId());
+        photoMetadataResponse.addOnCompleteListener(new OnCompleteListener<PlacePhotoMetadataResponse>() {
+            @Override
+            public void onComplete(@NonNull Task<PlacePhotoMetadataResponse> task) {
+                try {
                     // Get the list of photos.
                     PlacePhotoMetadataResponse photos = task.getResult();
                     // Get the PlacePhotoMetadataBuffer (metadata for all of the photos).
@@ -135,12 +136,12 @@ public class DetailsActivity extends AppCompatActivity {
                             }
                         });
                     }
-
+                } catch (Exception ex) {
+                    Log.e("", "getPhotos: exception", ex);
                 }
-            });
-        } catch (Exception ex) {
-            Log.e("", "getPhotos: exception", ex);
-        }
+            }
+        });
+
     }
 
     private void setUpTabs(PlaceDetails place) {

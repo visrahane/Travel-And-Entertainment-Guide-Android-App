@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_weight="1"
     android:layout_height="wrap_content">
 
     <TextView
@@ -123,10 +124,9 @@
            android:minLines="1"-->
     <TextView
         android:id="@+id/googlePageTxt"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-
         android:text="TextView"
         android:textColor="@color/pink"
         android:visibility="gone"
@@ -145,11 +145,11 @@
         android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/googlePageLbl" />
+        app:layout_constraintTop_toBottomOf="@+id/googlePageTxt" />
 
     <TextView
         android:id="@+id/websiteTxt"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:text="TextView"
@@ -157,30 +157,6 @@
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/googlePageTxt"
         app:layout_constraintTop_toBottomOf="@+id/googlePageTxt" />
-
-    <TextView
-        android:id="@+id/hoursLbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="25dp"
-        android:text="Hours"
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/websiteLbl" />
-
-    <TextView
-        android:id="@+id/hoursTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-
-        android:text="TextView"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@+id/websiteTxt"
-        app:layout_constraintTop_toBottomOf="@+id/websiteTxt" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -1,5 +1,7 @@
 package com.vis.entertainment.fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +47,35 @@ public class InfoFragment extends BaseFragment {
             place = gson.fromJson(getArguments().getString(ApplicationConstants.PLACE_DATA), PlaceDetails.class);
         }
         prepareTable();
+        registerEvents();
         return view;
+    }
+
+    private void registerEvents() {
+        phoneNoTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //call
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNoTxt.getText().toString()));
+                startActivity(intent);
+            }
+        });
+        googlePageTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //open page
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(googlePageTxt.getText().toString()));
+                startActivity(browserIntent);
+            }
+        });
+        websiteUriTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //open page
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(websiteUriTxt.getText().toString()));
+                startActivity(browserIntent);
+            }
+        });
     }
 
     private void init(View view) {
@@ -65,20 +95,20 @@ public class InfoFragment extends BaseFragment {
 
     private void prepareTable() {
         //Address
-        if (place.getAddress() != null && place.getAddress().trim().length()!=0) {
+        if (place.getAddress() != null) {
             addressLbl.setVisibility(View.VISIBLE);
             addressTxt.setText(place.getAddress());
             addressTxt.setVisibility(View.VISIBLE);
         }
         //Phone Number
-        if (place.getPhoneNo() != null && place.getPhoneNo().trim().length()!=0) {
+        if (place.getPhoneNo() != null) {
             phoneNoLbl.setVisibility(View.VISIBLE);
             phoneNoTxt.setText(place.getPhoneNo());
             phoneNoTxt.setVisibility(View.VISIBLE);
         }
         //Price Level
 
-        if (place.getPriceLevel() != null && place.getPriceLevel().trim().length()!=0) {
+        if (place.getPriceLevel() != null) {
             priceLevelLbl.setVisibility(View.VISIBLE);
             StringBuilder priceLevel = new StringBuilder();
             for (int i = 0; i < Integer.parseInt(place.getPriceLevel()); i++) {
@@ -88,13 +118,13 @@ public class InfoFragment extends BaseFragment {
             priceLevelTxt.setVisibility(View.VISIBLE);
         }
         //Rating
-        if (place.getRating() != null && place.getRating().trim().length()!=0) {
+        if (place.getRating() != null ) {
             ratingLbl.setVisibility(View.VISIBLE);
             ratingBar.setRating(Float.parseFloat(place.getRating()));
             ratingBar.setVisibility(View.VISIBLE);
         }
         //Website
-        if (place.getWebsiteUri() != null && place.getWebsiteUri().trim().length()!=0) {
+        if (place.getWebsiteUri() != null) {
             websiteUriLbl.setVisibility(View.VISIBLE);
             websiteUriTxt.setText(place.getWebsiteUri());
             websiteUriTxt.setVisibility(View.VISIBLE);
@@ -106,7 +136,7 @@ public class InfoFragment extends BaseFragment {
             phoneNoTxt.setVisibility(View.VISIBLE);
         }*/
         //Google page uri
-        if(place.getUrl()!=null && place.getUrl().trim().length()!=0){
+        if(place.getUrl()!=null){
             googlePageLbl.setVisibility(View.VISIBLE);
             googlePageTxt.setText(place.getUrl());
             googlePageTxt.setVisibility(View.VISIBLE);
