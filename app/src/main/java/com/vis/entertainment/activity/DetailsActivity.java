@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,6 +36,9 @@ import com.vis.entertainment.adapters.HomePagerAdapter;
 import com.vis.entertainment.constants.ApplicationConstants;
 import com.vis.entertainment.models.PlaceDetails;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +61,8 @@ public class DetailsActivity extends AppCompatActivity {
         Gson gson = new Gson();
         PlaceDetails place = gson.fromJson(placeData, PlaceDetails.class);
         requestQueue = Volley.newRequestQueue(this);
+        getSupportActionBar().setTitle((place.getName()));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getPhotos(place);
         getPlaceReviews(place);
@@ -76,6 +83,8 @@ public class DetailsActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(String response) {
                             Log.d("", "Place Details response is: " + response);
+                            JSONObject resultJson = getResultJson(response);
+                            detailsPagerAdapter.propagePlaceDetails(resultJson);
                         }
                     }, new Response.ErrorListener() {
                 @Override
@@ -90,35 +99,48 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
+    private JSONObject getResultJson(String response) {
+        JSONObject detailsJson = null;
+        try {
+            detailsJson = new JSONObject(response);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return detailsJson.optJSONObject("result");
+    }
+
     private void getPhotos(PlaceDetails place) {
+        try {
+            geoDataClient = Places.getGeoDataClient(this);
+            final Task<PlacePhotoMetadataResponse> photoMetadataResponse = geoDataClient.getPlacePhotos(place.getPlaceId());
+            photoMetadataResponse.addOnCompleteListener(new OnCompleteListener<PlacePhotoMetadataResponse>() {
+                @Override
+                public void onComplete(@NonNull Task<PlacePhotoMetadataResponse> task) {
+                    // Get the list of photos.
+                    PlacePhotoMetadataResponse photos = task.getResult();
+                    // Get the PlacePhotoMetadataBuffer (metadata for all of the photos).
+                    PlacePhotoMetadataBuffer photoMetadataBuffer = photos.getPhotoMetadata();
+                    // Get the first photo in the list.
+                    for (PlacePhotoMetadata photoMetadata : photoMetadataBuffer) {
+                        // Get the attribution text.
+                        //CharSequence attribution = photoMetadata.getAttributions();
+                        // Get a full-size bitmap for the photo.
+                        Task<PlacePhotoResponse> photoResponse = geoDataClient.getPhoto(photoMetadata);
+                        photoResponse.addOnCompleteListener(new OnCompleteListener<PlacePhotoResponse>() {
+                            @Override
+                            public void onComplete(@NonNull Task<PlacePhotoResponse> task) {
+                                PlacePhotoResponse photo = task.getResult();
+                                photoBitmapList.add(photo.getBitmap());
+                                detailsPagerAdapter.updatePhotoList(photoBitmapList);
+                            }
+                        });
+                    }
 
-        geoDataClient = Places.getGeoDataClient(this);
-        final Task<PlacePhotoMetadataResponse> photoMetadataResponse = geoDataClient.getPlacePhotos(place.getPlaceId());
-        photoMetadataResponse.addOnCompleteListener(new OnCompleteListener<PlacePhotoMetadataResponse>() {
-            @Override
-            public void onComplete(@NonNull Task<PlacePhotoMetadataResponse> task) {
-                // Get the list of photos.
-                PlacePhotoMetadataResponse photos = task.getResult();
-                // Get the PlacePhotoMetadataBuffer (metadata for all of the photos).
-                PlacePhotoMetadataBuffer photoMetadataBuffer = photos.getPhotoMetadata();
-                // Get the first photo in the list.
-                for (PlacePhotoMetadata photoMetadata : photoMetadataBuffer) {
-                    // Get the attribution text.
-                    //CharSequence attribution = photoMetadata.getAttributions();
-                    // Get a full-size bitmap for the photo.
-                    Task<PlacePhotoResponse> photoResponse = geoDataClient.getPhoto(photoMetadata);
-                    photoResponse.addOnCompleteListener(new OnCompleteListener<PlacePhotoResponse>() {
-                        @Override
-                        public void onComplete(@NonNull Task<PlacePhotoResponse> task) {
-                            PlacePhotoResponse photo = task.getResult();
-                            photoBitmapList.add(photo.getBitmap());
-                            detailsPagerAdapter.updatePhotoList(photoBitmapList);
-                        }
-                    });
                 }
-
-            }
-        });
+            });
+        } catch (Exception ex) {
+            Log.e("", "getPhotos: exception", ex);
+        }
     }
 
     private void setUpTabs(PlaceDetails place) {

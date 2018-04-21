@@ -20,6 +20,8 @@ import com.vis.entertainment.fragments.PhotosFragment;
 import com.vis.entertainment.fragments.ReviewsFragment;
 import com.vis.entertainment.models.PlaceDetails;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,5 +88,12 @@ public class DetailsPagerAdapter extends FragmentPagerAdapter {
     public void updatePhotoList(List<Bitmap> photoBitmapList) {
         fragmentList.get(1).prepareList(photoBitmapList);
         //this.photoList=photoBitmapList;
+    }
+
+    public void propagePlaceDetails(JSONObject resultJson) {
+        for(BaseFragment baseFragment:fragmentList){
+            baseFragment.updateInfo(resultJson);
+        }
+        //fragmentList.get(0).updateInfo(resultJson);
     }
 }

@@ -7,10 +7,14 @@ import android.view.ViewGroup;
 
 import com.vis.entertainment.R;
 
+import org.json.JSONObject;
+
 public class ReviewsFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.favorite, container, false);
         return view;
     }
+    @Override
+    public void updateInfo(JSONObject details){ }
 }

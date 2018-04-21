@@ -92,8 +92,8 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
         if(place.getName()!=null)placeDetails.setName(place.getName().toString());
         if(place.getPhoneNumber()!=null)placeDetails.setPhoneNo(place.getPhoneNumber().toString());
         placeDetails.setPlaceId(place.getId());
-        placeDetails.setRating(Float.toString(place.getRating()));
-        placeDetails.setPriceLevel(Integer.toString(place.getPriceLevel()));
+        if(place.getRating()!=-1.0)placeDetails.setRating(Float.toString(place.getRating()));
+        if(place.getPriceLevel()!=-1)placeDetails.setPriceLevel(Integer.toString(place.getPriceLevel()));
         placeDetails.setLatLng(place.getLatLng());
         return placeDetails;
     }
@@ -112,7 +112,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
         this.searchResultActivity=searchResultActivity;
         this.geoDataClient= Places.getGeoDataClient(searchResultActivity);
         progress=new ProgressDialog(searchResultActivity,R.style.AppCompatAlertDialogStyle);
-        progress.setMessage("Fetching results");
+        progress.setMessage("Fetching details");
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setIndeterminate(true);
     }

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/addressLbl"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="25dp"
         android:text="Address"
         android:textStyle="bold"
         android:visibility="gone"
@@ -23,11 +23,10 @@
     <TextView
         android:id="@+id/addressTxt"
         android:layout_width="wrap_content"
-        android:layout_height="16dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="60dp"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="25dp"
         android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/addressLbl"
         app:layout_constraintTop_toTopOf="parent" />
@@ -39,7 +38,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="25dp"
         android:text="Phone Number"
         android:textStyle="bold"
         android:visibility="gone"
@@ -50,7 +49,7 @@
         android:id="@+id/phoneNoTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="25dp"
         android:layout_marginBottom="16dp"
         android:text="TextView"
         android:visibility="gone"
@@ -65,7 +64,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="25dp"
         android:text="Price Level"
         android:textStyle="bold"
         android:visibility="gone"
@@ -76,7 +75,7 @@
         android:id="@+id/priceLevelTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="25dp"
         android:layout_marginBottom="16dp"
         android:text="TextView"
         android:visibility="gone"
@@ -89,7 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="25dp"
         android:layout_marginBottom="16dp"
         android:text="Rating"
         android:textStyle="bold"
@@ -99,10 +98,10 @@
 
     <RatingBar
         android:id="@+id/ratingBar"
+        style="@style/Widget.AppCompat.RatingBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="25dp"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/priceLevelTxt"
         app:layout_constraintTop_toBottomOf="@+id/priceLevelTxt" />
@@ -113,20 +112,21 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="25dp"
         android:text="Google Page"
         android:textStyle="bold"
         android:visibility="gone"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ratingLbl" />
-
+    <!--android:maxLines="4"
+           android:minLines="1"-->
     <TextView
         android:id="@+id/googlePageTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="25dp"
+
         android:text="TextView"
         android:textColor="@color/pink"
         android:visibility="gone"
@@ -139,8 +139,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="25dp"
 
         android:text="Website"
         android:textStyle="bold"
@@ -152,8 +151,7 @@
         android:id="@+id/websiteTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="25dp"
         android:text="TextView"
         android:textColor="@color/pink"
         android:visibility="gone"
@@ -166,8 +164,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="25dp"
         android:text="Hours"
         android:textStyle="bold"
         android:visibility="gone"
@@ -178,8 +175,8 @@
         android:id="@+id/hoursTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="25dp"
+
         android:text="TextView"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/websiteTxt"

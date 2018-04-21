@@ -22,6 +22,24 @@ public class PlaceDetails {
 
     private String websiteUri;
 
+    private String url;
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("PlaceDetails{");
+        sb.append("latLng=").append(latLng);
+        sb.append(", placeId='").append(placeId).append('\'');
+        sb.append(", address='").append(address).append('\'');
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", phoneNo='").append(phoneNo).append('\'');
+        sb.append(", priceLevel='").append(priceLevel).append('\'');
+        sb.append(", rating='").append(rating).append('\'');
+        sb.append(", websiteUri='").append(websiteUri).append('\'');
+        sb.append(", url='").append(url).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
+
     public LatLng getLatLng() {
         return latLng;
     }
@@ -87,18 +105,11 @@ public class PlaceDetails {
     }
 
 
+    public String getUrl() {
+        return url;
+    }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("PlaceDetails{");
-        sb.append("placeId='").append(placeId).append('\'');
-        sb.append(", address='").append(address).append('\'');
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", phoneNo='").append(phoneNo).append('\'');
-        sb.append(", priceLevel='").append(priceLevel).append('\'');
-        sb.append(", rating='").append(rating).append('\'');
-        sb.append(", websiteUri='").append(websiteUri).append('\'');
-        sb.append('}');
-        return sb.toString();
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
