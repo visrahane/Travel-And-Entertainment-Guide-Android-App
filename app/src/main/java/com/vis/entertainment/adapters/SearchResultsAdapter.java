@@ -90,7 +90,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
         if(place.getWebsiteUri()!=null)placeDetails.setWebsiteUri(place.getWebsiteUri().toString());
         if(place.getAddress()!=null)placeDetails.setAddress(place.getAddress().toString());
         if(place.getName()!=null)placeDetails.setName(place.getName().toString());
-        if(place.getPhoneNumber()!=null)placeDetails.setPhoneNo(place.getPhoneNumber().toString());
+        if(place.getPhoneNumber()!=null && place.getPhoneNumber().length()!=0)placeDetails.setPhoneNo(place.getPhoneNumber().toString());
         placeDetails.setPlaceId(place.getId());
         if(place.getRating()!=-1.0)placeDetails.setRating(Float.toString(place.getRating()));
         if(place.getPriceLevel()!=-1)placeDetails.setPriceLevel(Integer.toString(place.getPriceLevel()));

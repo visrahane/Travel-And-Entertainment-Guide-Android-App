@@ -10,8 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,8 +18,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.places.GeoDataClient;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.PlaceBufferResponse;
 import com.google.android.gms.location.places.PlacePhotoMetadata;
 import com.google.android.gms.location.places.PlacePhotoMetadataBuffer;
 import com.google.android.gms.location.places.PlacePhotoMetadataResponse;
@@ -32,7 +28,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
 import com.vis.entertainment.R;
 import com.vis.entertainment.adapters.DetailsPagerAdapter;
-import com.vis.entertainment.adapters.HomePagerAdapter;
 import com.vis.entertainment.constants.ApplicationConstants;
 import com.vis.entertainment.models.PlaceDetails;
 
@@ -84,7 +79,7 @@ public class DetailsActivity extends AppCompatActivity {
                         public void onResponse(String response) {
                             Log.d("", "Place Details response is: " + response);
                             JSONObject resultJson = getResultJson(response);
-                            detailsPagerAdapter.propagePlaceDetails(resultJson);
+                            detailsPagerAdapter.propagatePlaceDetails(resultJson);
                         }
                     }, new Response.ErrorListener() {
                 @Override
@@ -121,10 +116,9 @@ public class DetailsActivity extends AppCompatActivity {
                     PlacePhotoMetadataResponse photos = task.getResult();
                     // Get the PlacePhotoMetadataBuffer (metadata for all of the photos).
                     PlacePhotoMetadataBuffer photoMetadataBuffer = photos.getPhotoMetadata();
-                    // Get the first photo in the list.
+                    // Get all photos
                     for (PlacePhotoMetadata photoMetadata : photoMetadataBuffer) {
                         // Get the attribution text.
-                        //CharSequence attribution = photoMetadata.getAttributions();
                         // Get a full-size bitmap for the photo.
                         Task<PlacePhotoResponse> photoResponse = geoDataClient.getPhoto(photoMetadata);
                         photoResponse.addOnCompleteListener(new OnCompleteListener<PlacePhotoResponse>() {
@@ -138,6 +132,7 @@ public class DetailsActivity extends AppCompatActivity {
                     }
                 } catch (Exception ex) {
                     Log.e("", "getPhotos: exception", ex);
+                    //display no photos text
                 }
             }
         });

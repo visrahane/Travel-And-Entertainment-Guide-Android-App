@@ -90,10 +90,11 @@ public class DetailsPagerAdapter extends FragmentPagerAdapter {
         //this.photoList=photoBitmapList;
     }
 
-    public void propagePlaceDetails(JSONObject resultJson) {
+    public void propagatePlaceDetails(JSONObject resultJson) {
         for(BaseFragment baseFragment:fragmentList){
             baseFragment.updateInfo(resultJson);
         }
         //fragmentList.get(0).updateInfo(resultJson);
     }
+
 }
