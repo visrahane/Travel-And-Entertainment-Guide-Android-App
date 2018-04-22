@@ -35,6 +35,7 @@ import com.vis.entertainment.adapters.DetailsPagerAdapter;
 import com.vis.entertainment.constants.ApplicationConstants;
 import com.vis.entertainment.models.PlaceDetails;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -66,11 +67,11 @@ public class DetailsActivity extends AppCompatActivity {
                 String url = getResources().getString(R.string.twitterUrl);
                 String text = "Check out " + place.getName() + " located at " + place.getAddress() + ". Website:";
                 String hashtagText = "TravelAndEntertainmentSearch";
-                String websiteUri=place.getWebsiteUri()!=null?place.getWebsiteUri():"www.google.com";
+                String websiteUri = place.getWebsiteUri() != null ? place.getWebsiteUri() : "www.google.com";
                 Uri builtUri = Uri.parse(url)
                         .buildUpon()
                         .appendQueryParameter("text", text)
-                        .appendQueryParameter("url",websiteUri)
+                        .appendQueryParameter("url", websiteUri)
                         .appendQueryParameter("hashtags", hashtagText)
                         .build();
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(builtUri.toString()));
@@ -107,38 +108,38 @@ public class DetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getPhotos(place);
-        getPlaceReviews(place);
+        propagatePlaceReviews();
         setUpTabs(place);
 
     }
 
-    private void getPlaceReviews(PlaceDetails place) {
-        {
-            //make a call to the server and fetch result
-            String url = getResources().getString(R.string.placeDetailsUri);
-            Uri builtUri = Uri.parse(url)
-                    .buildUpon()
-                    .appendQueryParameter("placeId", place.getPlaceId())
-                    .build();
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, builtUri.toString(),
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            Log.d("", "Place Details response is: " + response);
-                            JSONObject resultJson = getResultJson(response);
-                            detailsPagerAdapter.propagatePlaceDetails(resultJson);
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    //error Message
-                    Log.d("", "Place Details response is: " + error);
-                }
-            });
+    private void propagatePlaceReviews() {
+
+        //make a call to the server and fetch result
+        String url = getResources().getString(R.string.placeDetailsUri);
+        Uri builtUri = Uri.parse(url)
+                .buildUpon()
+                .appendQueryParameter("placeId", place.getPlaceId())
+                .build();
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, builtUri.toString(),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("", "Place Details response is: " + response);
+                        JSONObject resultJson = getResultJson(response);
+                        detailsPagerAdapter.propagatePlaceDetails(resultJson);
+                        propagateYelpPlaceReviews(resultJson);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //error Message
+                Log.d("", "Place Details response is: " + error);
+            }
+        });
 
 // Add the request to the RequestQueue.
-            requestQueue.add(stringRequest);
-        }
+        requestQueue.add(stringRequest);
     }
 
     private JSONObject getResultJson(String response) {
@@ -204,4 +205,73 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
 
+    public void propagateYelpPlaceReviews(JSONObject googlePlaceDetails) {
+        //make a call to the server and fetch result
+        String address[] = getAddress(googlePlaceDetails);
+        String uri = getResources().getString(R.string.yelpReviewUri);
+        Uri builtUri = Uri.parse(uri)
+                .buildUpon()
+                .appendQueryParameter("name", place.getName())
+                .appendQueryParameter("city", address[2])
+                .appendQueryParameter("state", address[3])
+                .appendQueryParameter("country", address[4])
+                .appendQueryParameter("latitude", Double.toString(place.getLatLng().latitude))
+                .appendQueryParameter("longitude", Double.toString(place.getLatLng().longitude))
+                .appendQueryParameter("address1", address[0] + " " + address[1])
+                .build();
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, builtUri.toString(),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("", "Place Details response is: " + response);
+                        JSONArray resultArray = null;
+                        JSONObject resultJson = new JSONObject();
+                        try {
+                            if (!response.contains("NO_RECORDS")) {
+                                resultArray = new JSONArray(response);
+                                resultJson.put(ApplicationConstants.YELP_REVIEWS, resultArray);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        detailsPagerAdapter.propagatePlaceDetails(resultJson);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //error Message
+                Log.d("", "Place Details response is: " + error);
+            }
+        });
+
+// Add the request to the RequestQueue.
+        requestQueue.add(stringRequest);
+    }
+
+    private String[] getAddress(JSONObject googlePlaceDetails) {
+        String address[] = new String[5];
+        JSONArray addressComponent = null;
+        try {
+            addressComponent = googlePlaceDetails.getJSONArray("address_components");
+
+            for (int i = 0; i < addressComponent.length(); i++) {
+                JSONObject addressJson = addressComponent.getJSONObject(i);
+                JSONArray types = addressJson.getJSONArray("types");
+                if (types.toString().contains("\"street_number\"")) {
+                    address[0] = addressJson.getString("short_name");
+                } else if (types.toString().contains("\"route\"")) {
+                    address[1] = addressJson.getString("short_name");
+                } else if (types.toString().contains("locality")) {
+                    address[2] = addressJson.getString("short_name");
+                } else if (types.toString().contains("\"administrative_area_level_1\"")) {
+                    address[3] = addressJson.getString("short_name");
+                } else if (types.toString().contains("\"country\"")) {
+                    address[4] = addressJson.getString("short_name");
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return address;
+    }
 }

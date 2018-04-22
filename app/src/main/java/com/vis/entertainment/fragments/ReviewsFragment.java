@@ -19,6 +19,7 @@ import com.vis.entertainment.adapters.PhotoResultsAdapter;
 import com.vis.entertainment.adapters.ReviewsAdapter;
 import com.vis.entertainment.constants.ApplicationConstants;
 import com.vis.entertainment.constants.OrderEnum;
+import com.vis.entertainment.constants.ReviewEnum;
 import com.vis.entertainment.models.PlaceDetails;
 import com.vis.entertainment.models.Review;
 import com.vis.entertainment.util.ApplicationUtil;
@@ -41,19 +42,39 @@ import java.util.TimeZone;
 public class ReviewsFragment extends BaseFragment {
     public static final String NO_REVIEWS = "No Reviews";
     private List<Review> reviewsList = new ArrayList<>();
+    private List<Review> googleList = new ArrayList<>();
+    private List<Review> yelpList = new ArrayList<>();
+
     private List<Review> defaultReviewsList = new ArrayList<>();
     private RecyclerView recyclerView;
     private ReviewsAdapter resultAdapter;
     private TextView emptyView;
     private Spinner orderSpinner;
+    private Spinner reviewSpinner;
     private String[] orderList;
+    private String[] reviewNameList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.review_page, container, false);
         recyclerView = view.findViewById(R.id.reviewRecycler);
         emptyView = view.findViewById(R.id.noRecordsTxt);
+        orderSpinner=view.findViewById(R.id.orderDropdown);
+        reviewSpinner=view.findViewById(R.id.reviewsDropdown);
+        resultAdapter = new ReviewsAdapter(reviewsList);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getContext().getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(resultAdapter);
+        Resources res = getResources();
+        orderList= res.getStringArray(R.array.orderArray);
+        reviewNameList= res.getStringArray(R.array.reviewArray);
+        setListeners();
+        prepareReviewList();
+        return view;
+    }
 
+    private void showEmptyRecordText() {
         if (reviewsList.isEmpty()) {
             recyclerView.setVisibility(View.GONE);
             emptyView.setText(NO_REVIEWS);
@@ -62,21 +83,28 @@ public class ReviewsFragment extends BaseFragment {
             recyclerView.setVisibility(View.VISIBLE);
             emptyView.setVisibility(View.GONE);
         }
-        orderSpinner=view.findViewById(R.id.orderDropdown);
-        resultAdapter = new ReviewsAdapter(reviewsList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getContext().getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(resultAdapter);
-        Resources res = getResources();
-        orderList= res.getStringArray(R.array.orderArray);
-
-        setListeners();
-        prepareReviewList();
-        return view;
     }
 
     private void setListeners() {
+        reviewSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                orderSpinner.setSelection(0);//set to default order
+                switch (ReviewEnum.getEnum(reviewNameList[position])) {
+                    case GOOGLE_REVIEW:
+                        reviewsList.clear();reviewsList.addAll(googleList);break;
+                    case YELP_REVIEW:
+                        reviewsList.clear();reviewsList.addAll(yelpList);break;
+                }
+                showEmptyRecordText();//show no records if no reviews
+                resultAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         orderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
@@ -131,7 +159,11 @@ public class ReviewsFragment extends BaseFragment {
                     case DEFAULT_ORDER:
                     default:
                         reviewsList.clear();
-                        reviewsList.addAll(defaultReviewsList);
+                        if(ReviewEnum.GOOGLE_REVIEW.getName().equals(reviewSpinner.getSelectedItem().toString())){
+                            reviewsList.addAll(googleList);
+                        }else {
+                            reviewsList.addAll(yelpList);
+                        }
                         break;
                 }
                 resultAdapter.notifyDataSetChanged();
@@ -152,25 +184,55 @@ public class ReviewsFragment extends BaseFragment {
     public void updateInfo(JSONObject resultJson) {
         //prepare Review objects and add to the list
         if (resultJson.has("reviews")) {
-            JSONArray reviews = null;
-            try {
-                reviews = resultJson.getJSONArray("reviews");
-                for (int i = 0; i < reviews.length(); i++) {
-                    Review review = new Review();
-                    JSONObject reviewJson = reviews.getJSONObject(i);
-                    review.setAuthorName(reviewJson.getString("author_name"));
-                    review.setAuthorUrl(reviewJson.getString("author_url"));
-                    review.setPhotoUrl(reviewJson.getString("profile_photo_url"));
-                    review.setRating(reviewJson.getString("rating"));
-                    review.setText(reviewJson.getString("text"));
-                    review.setDate(ApplicationUtil.getDateFromEpoch(reviewJson.getString("time")));
-                    reviewsList.add(review);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
+            googleList.addAll(getGoogleReviews(resultJson));
+        } else if(resultJson.has(ApplicationConstants.YELP_REVIEWS)) {
+            yelpList.addAll(getYelpReviews(resultJson));
         }
-        defaultReviewsList.addAll(reviewsList);
+        //defaultReviewsList.addAll(reviewsList);
+        reviewsList.addAll(googleList);
+    }
+
+    private List<Review>  getYelpReviews(JSONObject resultJson) {
+        JSONArray reviews = null;
+        List<Review>yelpReviews=new ArrayList<>();
+        try {
+            reviews = resultJson.getJSONArray(ApplicationConstants.YELP_REVIEWS);
+            for (int i = 0; i < reviews.length(); i++) {
+                Review review = new Review();
+                JSONObject reviewJson = reviews.getJSONObject(i);
+                review.setAuthorName(reviewJson.getJSONObject("user").getString("name"));
+                review.setAuthorUrl(reviewJson.getString("url"));
+                review.setPhotoUrl(reviewJson.getJSONObject("user").getString("image_url"));
+                review.setRating(reviewJson.getString("rating"));
+                review.setText(reviewJson.getString("text"));
+                review.setDate((reviewJson.getString("time_created")));
+                yelpReviews.add(review);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return yelpReviews;
+    }
+
+    private List<Review> getGoogleReviews(JSONObject resultJson) {
+        JSONArray reviews = null;
+        List<Review>googleReviews=new ArrayList<>();
+        try {
+            reviews = resultJson.getJSONArray("reviews");
+            for (int i = 0; i < reviews.length(); i++) {
+                Review review = new Review();
+                JSONObject reviewJson = reviews.getJSONObject(i);
+                review.setAuthorName(reviewJson.getString("author_name"));
+                review.setAuthorUrl(reviewJson.getString("author_url"));
+                review.setPhotoUrl(reviewJson.getString("profile_photo_url"));
+                review.setRating(reviewJson.getString("rating"));
+                review.setText(reviewJson.getString("text"));
+                review.setDate(ApplicationUtil.getDateFromEpoch(reviewJson.getString("time")));
+                googleReviews.add(review);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return googleReviews;
     }
 }
