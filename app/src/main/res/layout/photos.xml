@@ -13,7 +13,7 @@
 
 
     <ImageView
-        android:id="@+id/photo"
+        android:id="@+id/authorImg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 

@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vis.entertainment.R;
@@ -27,15 +26,7 @@ public class PhotoResultsAdapter extends RecyclerView.Adapter<PhotoResultsAdapte
 
         public ViewHolder(View view) {
             super(view);
-            photoImageView=view.findViewById(R.id.photo);
-
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int pos = getAdapterPosition();
-                    Toast.makeText(itemView.getContext(), pos, Toast.LENGTH_SHORT).show();
-                }
-            });
+            photoImageView=view.findViewById(R.id.authorImg);
         }
 
 

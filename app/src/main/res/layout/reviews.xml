@@ -1,92 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <Spinner
-        android:id="@+id/reviewsDropdown"
-        android:layout_width="170dp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp">
+
+    <ImageView
+        android:id="@+id/authorImg"
+        android:layout_width="37dp"
         android:layout_height="wrap_content"
-        android:entries="@array/reviewArray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.054"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="5dp" />
 
-    <Spinner
-        android:id="@+id/orderDropdown"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="24dp"
-        android:entries="@array/orderArray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/reviewsDropdown"
-        tools:layout_editor_absoluteY="5dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="19dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="44dp"
+        android:adjustViewBounds="true"
+        android:gravity="center" />
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/authorName"
         android:layout_width="wrap_content"
-        android:layout_height="150dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/orderDropdown">
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/reviewRatingBar"
+        android:layout_alignStart="@+id/reviewRatingBar"
+        android:text="TextView"
+        android:textColor="@color/colorTheme" />
 
-        <ImageView
-            android:id="@+id/photo"
-            android:layout_width="37dp"
-            android:layout_height="wrap_content"
+    <RatingBar
+        android:id="@+id/reviewRatingBar"
+        style="@style/Widget.AppCompat.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/authorImg"
+        android:layout_marginLeft="80dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="-26dp"
+        android:numStars="5" />
 
-            android:layout_alignParentStart="true"
+    <TextView
+        android:id="@+id/reviewDateTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/authorName"
+        android:layout_alignStart="@+id/authorName"
+        android:layout_below="@+id/reviewRatingBar"
+        android:text="TextView" />
 
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="19dp"
-            android:layout_marginTop="44dp"
-            android:adjustViewBounds="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="19dp" />
+    <TextView
+        android:id="@+id/reviewTxt"
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/authorName"
+        android:layout_alignStart="@+id/authorName"
+        android:layout_below="@+id/reviewDateTxt"
+        android:text="TextView" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="290dp"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/ratingBar"
-            android:text="TextView"
-            android:layout_alignLeft="@+id/ratingBar" />
 
-        <RatingBar
-            android:id="@+id/ratingBar"
-            android:layout_width="290dp"
-            android:layout_height="43dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/photo"
-            android:layout_marginStart="80dp"
-            android:layout_marginTop="-25dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="80dp" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="290dp"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/textView"
-            android:layout_below="@+id/ratingBar"
-            android:text="TextView"
-            android:layout_alignLeft="@+id/textView" />
-
-        <EditText
-            android:id="@+id/editText2"
-            android:layout_width="290dp"
-            android:layout_height="30dp"
-            android:layout_alignStart="@+id/textView"
-            android:layout_below="@+id/textView2"
-            android:ems="10"
-            android:inputType="textMultiLine"
-            android:layout_alignLeft="@+id/textView" />
-    </RelativeLayout>
-
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

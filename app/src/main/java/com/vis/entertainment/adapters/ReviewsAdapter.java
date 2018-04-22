@@ -6,11 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.vis.entertainment.R;
 import com.vis.entertainment.models.Result;
+import com.vis.entertainment.models.Review;
 
 import org.json.JSONObject;
 
@@ -18,11 +21,15 @@ import java.util.List;
 
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHolder> {
 
-    private List<JSONObject> reviewList;
+    private List<Review> reviewList;
+
+    public ReviewsAdapter(List<Review> reviewsList) {
+        this.reviewList=reviewsList;
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view =  LayoutInflater.from(parent.getContext())
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.reviews, parent, false);
 
         ReviewsAdapter.ViewHolder viewHolder = new ReviewsAdapter.ViewHolder(view);
@@ -32,11 +39,12 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        /*Result result = resultList.get(position);
-        Picasso.get().load(result.getCategoryImageUrl()).into(holder.categoryImage);
-        holder.favoriteImage.setImageResource(R.drawable.heart_outline_black);
-        holder.address.setText(result.getAddress());
-        holder.name.setText(result.getName());*/
+        Review review = reviewList.get(position);
+        Picasso.get().load(review.getPhotoUrl()).into(holder.authorImageView);
+        holder.reviewTxt.setText(review.getText());
+        holder.authorName.setText(review.getAuthorName());
+        holder.reviewDate.setText(review.getDate());
+        holder.reviewRating.setRating(Float.parseFloat(review.getRating()));
     }
 
     @Override
@@ -47,11 +55,17 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
 
-        private ImageView photoImageView;
+        private ImageView authorImageView;
+        private TextView authorName, reviewDate, reviewTxt;
+        private RatingBar reviewRating;
 
         public ViewHolder(View view) {
             super(view);
-            photoImageView=view.findViewById(R.id.photo);
+            authorImageView = view.findViewById(R.id.authorImg);
+            authorName = (TextView) view.findViewById(R.id.authorName);
+            reviewDate = (TextView) view.findViewById(R.id.reviewDateTxt);
+            reviewTxt = (TextView) view.findViewById(R.id.reviewTxt);
+            reviewRating = view.findViewById(R.id.reviewRatingBar);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override

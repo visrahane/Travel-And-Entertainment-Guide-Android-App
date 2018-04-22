@@ -8,17 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.vis.entertainment.R;
 import com.vis.entertainment.constants.ApplicationConstants;
-import com.vis.entertainment.constants.InfoConstants;
 import com.vis.entertainment.models.PlaceDetails;
-import com.vis.entertainment.models.Result;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -90,7 +86,7 @@ public class InfoFragment extends BaseFragment {
         googlePageLbl = view.findViewById(R.id.googlePageLbl);
         googlePageTxt = view.findViewById(R.id.googlePageTxt);
         ratingLbl=view.findViewById(R.id.ratingLbl);
-        ratingBar=view.findViewById(R.id.ratingBar);
+        ratingBar=view.findViewById(R.id.reviewRatingBar);
     }
 
     private void prepareTable() {
