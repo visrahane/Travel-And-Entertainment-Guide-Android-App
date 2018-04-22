@@ -1,6 +1,8 @@
 package com.vis.entertainment.adapters;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,7 +73,10 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
                 @Override
                 public void onClick(View view) {
                     int pos = getAdapterPosition();
-                    Toast.makeText(itemView.getContext(), pos, Toast.LENGTH_SHORT).show();
+                    Review review=reviewList.get(pos);
+                    //open webpage
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(review.getAuthorUrl()));
+                    view.getContext().startActivity(browserIntent);
                 }
             });
         }
