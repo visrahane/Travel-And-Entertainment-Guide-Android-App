@@ -37,11 +37,13 @@ public class SearchFragment extends Fragment {
 
     private MainActivity mainActivity;
     private  View view;
-    private TextView keywordTxt;
-    private TextView distanceTxt;
+    private EditText keywordTxt;
+    private EditText distanceTxt;
     private AutoCompleteTextView locationTxt;
     private RadioGroup fromRadioGrp;
     private Spinner categorySpinner;
+    private RadioButton currentLocationRadioBtn;
+    private Button clearBtn;
     private RequestQueue requestQueue;
    // private ProgressBar progressBar;
     private ProgressDialog progress;
@@ -79,32 +81,27 @@ public class SearchFragment extends Fragment {
                 }
             }
         });
-        final RadioButton currentLocationRadioBtn=(RadioButton)view.findViewById(R.id.currentLocationRadioBtn);
-        Button clearBtn=(Button)view.findViewById(R.id.clearBtn);
-        final EditText keywordTxt,distanceTxt,locationTxt;
-        final Spinner categoryDropDown=(Spinner)view.findViewById(R.id.categoryDropDown);
-        keywordTxt=(EditText)view.findViewById(R.id.keywordTxt);
-        distanceTxt=(EditText)view.findViewById(R.id.distanceTxt);
-        locationTxt=(EditText)view.findViewById(R.id.locationTxt);
         clearBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 keywordTxt.getText().clear();
                 distanceTxt.getText().clear();
                 locationTxt.getText().clear();
-                categoryDropDown.setSelection(0);
+                categorySpinner.setSelection(0);
                 currentLocationRadioBtn.performClick();
             }
         });
         return view;
     }
     private void init() {
-        keywordTxt=  view.findViewById(R.id.keywordTxt);
-        distanceTxt= (TextView) view.findViewById(R.id.distanceTxt);
+        keywordTxt=  (EditText)view.findViewById(R.id.keywordTxt);
+        distanceTxt= (EditText) view.findViewById(R.id.distanceTxt);
         locationTxt= (AutoCompleteTextView) view.findViewById(R.id.locationTxt);
         categorySpinner= (Spinner) view.findViewById(R.id.categoryDropDown);
         fromRadioGrp= (RadioGroup) view.findViewById(R.id.fromRadioGroup);
         requestQueue= Volley.newRequestQueue(this.getContext().getApplicationContext());
+        currentLocationRadioBtn=(RadioButton)view.findViewById(R.id.currentLocationRadioBtn);
+        clearBtn=(Button)view.findViewById(R.id.clearBtn);
         //progressBar=view.findViewById(R.id.resultsProgressBar);
 
         //
