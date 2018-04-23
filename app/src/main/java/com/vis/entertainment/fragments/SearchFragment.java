@@ -69,7 +69,7 @@ public class SearchFragment extends Fragment {
                 getResults();
             }
         });
-        RadioGroup radioGroup=view.findViewById(R.id.fromRadioGroup);
+        final RadioGroup radioGroup=view.findViewById(R.id.fromRadioGroup);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
@@ -77,6 +77,23 @@ public class SearchFragment extends Fragment {
                     case R.id.otherLocationRadioBtn:locationTxt.setEnabled(true);break;
                     default:locationTxt.setEnabled(false);
                 }
+            }
+        });
+        final RadioButton currentLocationRadioBtn=(RadioButton)view.findViewById(R.id.currentLocationRadioBtn);
+        Button clearBtn=(Button)view.findViewById(R.id.clearBtn);
+        final EditText keywordTxt,distanceTxt,locationTxt;
+        final Spinner categoryDropDown=(Spinner)view.findViewById(R.id.categoryDropDown);
+        keywordTxt=(EditText)view.findViewById(R.id.keywordTxt);
+        distanceTxt=(EditText)view.findViewById(R.id.distanceTxt);
+        locationTxt=(EditText)view.findViewById(R.id.locationTxt);
+        clearBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                keywordTxt.getText().clear();
+                distanceTxt.getText().clear();
+                locationTxt.getText().clear();
+                categoryDropDown.setSelection(0);
+                currentLocationRadioBtn.performClick();
             }
         });
         return view;
