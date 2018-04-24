@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -37,11 +36,14 @@ public class SearchFragment extends Fragment {
 
     private MainActivity mainActivity;
     private  View view;
-    private TextView keywordTxt;
-    private TextView distanceTxt;
+    private EditText keywordTxt;
+    private EditText distanceTxt;
     private AutoCompleteTextView locationTxt;
-    private RadioGroup fromRadioGrp;
     private Spinner categorySpinner;
+    private RadioButton currentLocationRadioBtn;
+    private Button clearBtn;
+    private Button searchBtn;
+    private RadioGroup radioGroup;
     private RequestQueue requestQueue;
    // private ProgressBar progressBar;
     private ProgressDialog progress;
@@ -60,7 +62,7 @@ public class SearchFragment extends Fragment {
        view = inflater.inflate(R.layout.input_form, container, false);
 
         init();
-        Button searchBtn = (Button) view.findViewById(R.id.searchBtn);
+
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,7 +71,7 @@ public class SearchFragment extends Fragment {
                 getResults();
             }
         });
-        RadioGroup radioGroup=view.findViewById(R.id.fromRadioGroup);
+
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
@@ -79,15 +81,30 @@ public class SearchFragment extends Fragment {
                 }
             }
         });
+
+        clearBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                keywordTxt.getText().clear();
+                distanceTxt.getText().clear();
+                locationTxt.getText().clear();
+                categorySpinner.setSelection(0);
+                currentLocationRadioBtn.performClick();
+            }
+        });
+        
         return view;
     }
     private void init() {
         keywordTxt=  view.findViewById(R.id.keywordTxt);
-        distanceTxt= (TextView) view.findViewById(R.id.distanceTxt);
-        locationTxt= (AutoCompleteTextView) view.findViewById(R.id.locationTxt);
-        categorySpinner= (Spinner) view.findViewById(R.id.categoryDropDown);
-        fromRadioGrp= (RadioGroup) view.findViewById(R.id.fromRadioGroup);
+        distanceTxt= view.findViewById(R.id.distanceTxt);
+        locationTxt= view.findViewById(R.id.locationTxt);
+        categorySpinner= view.findViewById(R.id.categoryDropDown);
+        radioGroup=view.findViewById(R.id.fromRadioGroup);
+        searchBtn = view.findViewById(R.id.searchBtn);
         requestQueue= Volley.newRequestQueue(this.getContext().getApplicationContext());
+        currentLocationRadioBtn=view.findViewById(R.id.currentLocationRadioBtn);
+        clearBtn=view.findViewById(R.id.clearBtn);
         //progressBar=view.findViewById(R.id.resultsProgressBar);
 
         //
@@ -134,16 +151,5 @@ public class SearchFragment extends Fragment {
 
 // Add the request to the RequestQueue.
         requestQueue.add(stringRequest);
-    }
-    private void onClickLocation(View view){
-        RadioButton otherLocation=(RadioButton)view.findViewById(R.id.otherLocationRadioBtn);
-        EditText locationTxt;
-        locationTxt = (EditText)view.findViewById(R.id.locationTxt);
-        if(otherLocation.isChecked()){
-            locationTxt.setEnabled(true);
-        }
-        else{
-            locationTxt.setEnabled(false);
-        }
     }
 }
