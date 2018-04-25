@@ -29,11 +29,11 @@ public class PhotosFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.recycler_view, container, false);
+        View view = inflater.inflate(R.layout.photo_page, container, false);
         Gson gson = new Gson();
         place = gson.fromJson(getArguments().getString(ApplicationConstants.PLACE_DATA), PlaceDetails.class);
-        recyclerView =  view.findViewById(R.id.searchResultsView);
-        emptyView =  view.findViewById(R.id.noRecordsTxt);
+        recyclerView =  view.findViewById(R.id.photoResultsView);
+        emptyView =  view.findViewById(R.id.noPhotoTxt);
         if (photoList.isEmpty()) {
             recyclerView.setVisibility(View.GONE);
             emptyView.setText(NO_PHOTOS);

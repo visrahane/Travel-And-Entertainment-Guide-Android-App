@@ -4,13 +4,13 @@
     android:layout_height="wrap_content">
 
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/searchResultsView"
+        android:id="@+id/photoResultsView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical" />
 
     <TextView
-        android:id="@+id/noRecordsTxt"
+        android:id="@+id/noPhotoTxt"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"

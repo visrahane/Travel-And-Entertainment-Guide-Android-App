@@ -37,7 +37,7 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
         }
         else if (position == 1)
         {
-            fragment = new FavoriteFragment();
+            fragment = new FavoriteFragment(mainActivity);
         }
         return fragment;
     }

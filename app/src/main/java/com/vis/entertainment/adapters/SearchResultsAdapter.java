@@ -3,6 +3,7 @@ package com.vis.entertainment.adapters;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,7 +34,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
 
     private List<Result> resultList;
     private GeoDataClient geoDataClient;
-    private SearchResultActivity searchResultActivity;
+    private AppCompatActivity searchResultActivity;
     private ProgressDialog progress;
 
     public static final String TAG=SearchResultsAdapter.class.getName();
@@ -107,7 +108,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
         searchResultActivity.startActivity(intent);
     }
 
-    public SearchResultsAdapter(List<Result> resultList,SearchResultActivity searchResultActivity) {
+    public SearchResultsAdapter(List<Result> resultList,AppCompatActivity searchResultActivity) {
         this.resultList = resultList;
         this.searchResultActivity=searchResultActivity;
         this.geoDataClient= Places.getGeoDataClient(searchResultActivity);
