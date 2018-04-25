@@ -1,6 +1,8 @@
 package com.vis.entertainment.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -14,6 +16,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,6 +38,8 @@ import com.vis.entertainment.R;
 import com.vis.entertainment.adapters.DetailsPagerAdapter;
 import com.vis.entertainment.constants.ApplicationConstants;
 import com.vis.entertainment.models.PlaceDetails;
+import com.vis.entertainment.models.Result;
+import com.vis.entertainment.util.ApplicationUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,12 +58,26 @@ public class DetailsActivity extends AppCompatActivity {
     private final List<Bitmap> photoBitmapList = new ArrayList<>();
     private RequestQueue requestQueue;
     private PlaceDetails place;
+    private Menu menu;
+    private SharedPreferences sharedPref;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu=menu;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
+        sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        List<Result> favList = ApplicationUtil.retrieveFromSharedPref(sharedPref);
+        if(ApplicationUtil.isFavorite(place.getPlaceId(),favList)){
+            setOptionIcon(R.id.favourite,R.drawable.heart_fill_white);
+        }
         return true;
+    }
+
+    private void setOptionIcon(int id, int iconRes)
+    {
+        MenuItem item = menu.findItem(id);
+        item.setIcon(iconRes);
     }
 
     @Override
@@ -79,16 +99,54 @@ public class DetailsActivity extends AppCompatActivity {
                 return true;
 
             case R.id.favourite:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
+                Result result=prepareResultObj(place);
+                List<Result> favList = ApplicationUtil.retrieveFromSharedPref(sharedPref);
+                if(ApplicationUtil.isFavorite(result.getPlaceId(),favList)){
+                    item.setIcon(R.drawable.heart_outline_white);
+                    removeFavorite(result,favList);
+                }else{
+                    item.setIcon(R.drawable.heart_fill_white);
+                    addToFavorite(result,favList);
+                }
                 return true;
-
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
-
+                //return super.onOptionsItemSelected(item);
+                onBackPressed();
+                return true;
         }
+    }
+
+    private void removeFavorite(Result result, List<Result> favList) {
+        //remove from FavList
+        Result staleResult=null;
+        for(Result fav:favList){
+            if(fav.getPlaceId().equals(result.getPlaceId())){
+                staleResult=fav;
+                break;
+            }
+        }
+        favList.remove(staleResult);
+        //save the list
+        ApplicationUtil.saveToSharedPref(sharedPref, favList);
+        Toast.makeText(this, result.getName()+" was removed from favorites", Toast.LENGTH_SHORT).show();
+    }
+    private void addToFavorite(Result result, List<Result> favList) {
+        //appendTo FavList
+        favList.add(result);
+        //save the list
+        ApplicationUtil.saveToSharedPref(sharedPref, favList);
+        Toast.makeText(this, result.getName()+" was added to favorites", Toast.LENGTH_SHORT).show();
+    }
+
+    private Result prepareResultObj(PlaceDetails place) {
+        Result result=new Result();
+        result.setPlaceId(place.getPlaceId());
+        result.setAddress(place.getAddress());
+        result.setName(place.getName());
+        result.setCategoryImageUrl(place.getCategoryImageUrl());
+        return result;
     }
 
 
@@ -103,9 +161,13 @@ public class DetailsActivity extends AppCompatActivity {
         String placeData = intent.getStringExtra(ApplicationConstants.PLACE_DATA);
         Gson gson = new Gson();
         place = gson.fromJson(placeData, PlaceDetails.class);
+        sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        List<Result> favList = ApplicationUtil.retrieveFromSharedPref(sharedPref);
+
         requestQueue = Volley.newRequestQueue(this);
         getSupportActionBar().setTitle((place.getName()));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         getPhotos(place);
         propagatePlaceReviews();

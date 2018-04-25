@@ -24,6 +24,16 @@ public class PlaceDetails {
 
     private String url;
 
+    private String categoryImageUrl;
+
+    public String getCategoryImageUrl() {
+        return categoryImageUrl;
+    }
+
+    public void setCategoryImageUrl(String categoryImageUrl) {
+        this.categoryImageUrl = categoryImageUrl;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("PlaceDetails{");
@@ -36,6 +46,7 @@ public class PlaceDetails {
         sb.append(", rating='").append(rating).append('\'');
         sb.append(", websiteUri='").append(websiteUri).append('\'');
         sb.append(", url='").append(url).append('\'');
+        sb.append(", categoryImageUrl='").append(categoryImageUrl).append('\'');
         sb.append('}');
         return sb.toString();
     }

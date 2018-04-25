@@ -7,7 +7,7 @@
     <string name="placeDetailsUri">http://webtechtravel-env.us-east-2.elasticbeanstalk.com/placeDetails?</string>
     <!--Pages Names -->
     <string name="searchResultPageTitle">Search Results</string>
-<!--Other urls-->
+    <!--Other urls-->
     <string name="twitterUrl">https://twitter.com/intent/tweet?</string>
     <!--Image urls-->
     <string name="heartFillRedImgUrl">http://cs-server.usc.edu:45678/hw/hw9/images/android/heart_fill_red.xml</string>
@@ -25,7 +25,7 @@
         <item>Search</item>
         <item>Favorites</item>
     </string-array>
-
+    <string name="preference_file_key">com.vis.entertainment.PREFERENCE_FILE_KEY</string>
     <string-array name="travelModeArray">
         <item>Driving</item>
         <item>Walking</item>

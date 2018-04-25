@@ -15,7 +15,7 @@
     <!--favorite btn-->
     <item
         android:id="@+id/favourite"
-        android:icon="@drawable/heart_fill_white"
+        android:icon="@drawable/heart_outline_white"
         android:title="Favorite"
         app:showAsAction="always"
         android:orderInCategory="101"/>

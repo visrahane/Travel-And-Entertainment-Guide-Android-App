@@ -22,6 +22,7 @@ import com.android.volley.toolbox.Volley;
 import com.vis.entertainment.R;
 import com.vis.entertainment.adapters.SearchResultsAdapter;
 import com.vis.entertainment.constants.ApplicationConstants;
+import com.vis.entertainment.constants.TagsEnum;
 import com.vis.entertainment.models.Result;
 
 import org.json.JSONArray;
@@ -158,7 +159,7 @@ public class SearchResultActivity extends AppCompatActivity {
     private void init() {
         recyclerView = (RecyclerView) findViewById(R.id.searchResultsView);
         requestQueue = Volley.newRequestQueue(this.getApplicationContext());
-        resultAdapter = new SearchResultsAdapter(resultList, this);
+        resultAdapter = new SearchResultsAdapter(resultList, this, TagsEnum.SEARCH_LIST);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -167,7 +168,7 @@ public class SearchResultActivity extends AppCompatActivity {
         btnNext = findViewById(R.id.btnNext);
         emptyView = findViewById(R.id.noRecordsTxt);
         progress = new ProgressDialog(this, R.style.AppCompatAlertDialogStyle);
-        progress.setMessage("Fetching results");
+        progress.setMessage("Fetching next page");
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setIndeterminate(true);
     }
