@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -45,6 +46,8 @@ public class SearchFragment extends Fragment {
     private static final int AUTO_COMP_REQ_CODE = 301;
     private MainActivity mainActivity;
     private View view;
+    private TextView keywordErrorLbl;
+    private TextView otherLocationErrorLbl;
     private EditText keywordTxt;
     private EditText distanceTxt;
     private AutoCompleteTextView locationTxt;
@@ -75,9 +78,13 @@ public class SearchFragment extends Fragment {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //progressBar.setVisibility(View.VISIBLE);
-                progress.show();
-                getResults();
+                if (isValidated()) {
+                    //progressBar.setVisibility(View.VISIBLE);
+                    progress.show();
+                    getResults();
+                } else {
+                    Toast.makeText(getContext(), "Please fix all fields with errors", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -102,6 +109,8 @@ public class SearchFragment extends Fragment {
                 locationTxt.getText().clear();
                 categorySpinner.setSelection(0);
                 currentLocationRadioBtn.performClick();
+                keywordErrorLbl.setVisibility(TextView.GONE);
+                otherLocationErrorLbl.setVisibility(TextView.GONE);
             }
         });
 
@@ -112,9 +121,11 @@ public class SearchFragment extends Fragment {
     }
 
     private void init() {
+        keywordErrorLbl = view.findViewById(R.id.keywordErrorLbl);
         keywordTxt = view.findViewById(R.id.keywordTxt);
         distanceTxt = view.findViewById(R.id.distanceTxt);
         locationTxt = view.findViewById(R.id.locationTxt);
+        otherLocationErrorLbl=view.findViewById(R.id.otherLocationErrorLbl);
         categorySpinner = view.findViewById(R.id.categoryDropDown);
         radioGroup = view.findViewById(R.id.fromRadioGroup);
         searchBtn = view.findViewById(R.id.searchBtn);
@@ -169,11 +180,31 @@ public class SearchFragment extends Fragment {
         requestQueue.add(stringRequest);
     }
 
+    private boolean isValidated() {
+        boolean isValid=true;
+        if (keywordTxt.getText().toString().isEmpty() || keywordTxt.getText().toString().trim().isEmpty()) {
+            keywordErrorLbl.setVisibility(TextView.VISIBLE);
+            isValid=false;
+        } else {
+            keywordErrorLbl.setVisibility(TextView.GONE);
+        }
+        if (locationTxt.isEnabled() && (locationTxt.getText().toString().isEmpty() || locationTxt.getText().toString().trim().isEmpty())) {
+            otherLocationErrorLbl.setVisibility(TextView.VISIBLE);
+            isValid=false;
+        } else {
+            otherLocationErrorLbl.setVisibility(TextView.GONE);
+        }
+        return isValid;
+    }
+
     private AdapterView.OnItemClickListener onItemClickListener =
             new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    String address=((Result) adapterView.getItemAtPosition(i)).getAddress();
+                    String address = ((Result) adapterView.getItemAtPosition(i)).getAddress();
+                    Toast.makeText(mainActivity, "selected place " + (address)
+                            , Toast.LENGTH_SHORT).show();
+
                     locationTxt.setText(address);
                 }
             };
