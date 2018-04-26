@@ -108,33 +108,7 @@ public class SearchFragment extends Fragment {
         PlacePredictionAdapter adapter = new PlacePredictionAdapter(this.mainActivity);
         locationTxt.setAdapter(adapter);
         locationTxt.setOnItemClickListener(onItemClickListener);
-/*
-        locationTxt.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                try {
-                    Intent intent =
-                            new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
-                                    .build(mainActivity);
-                    startActivityForResult(intent, AUTO_COMP_REQ_CODE);
-                } catch (Exception e) {
-                    //Log.e(TAG, e.getStackTrace().toString());
-                }
-                return false;
-            }
-        });*/
-
         return view;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == AUTO_COMP_REQ_CODE) {
-            Place place = PlaceAutocomplete.getPlace(mainActivity, data);
-            Toast.makeText(mainActivity, "place " + place.toString(),
-                    Toast.LENGTH_LONG).show();
-
-        }
     }
 
     private void init() {
@@ -200,8 +174,6 @@ public class SearchFragment extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     String address=((Result) adapterView.getItemAtPosition(i)).getAddress();
-                    Toast.makeText(mainActivity,"selected place " + (address)
-                            , Toast.LENGTH_SHORT).show();
                     locationTxt.setText(address);
                 }
             };

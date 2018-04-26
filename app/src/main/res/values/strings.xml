@@ -33,6 +33,8 @@
         <item>Transit</item>
     </string-array>
 
+    <string name="googleApiKey">AIzaSyDWBtO4XwwiZCwCDr6z2aK8rXZMuO0OTNM</string>
+
     <string-array name="orderArray">
         <item>Default Order</item>
         <item>Highest Rating</item>

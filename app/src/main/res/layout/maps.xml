@@ -15,7 +15,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/travelModeSpinner" />
 
     <TextView
         android:id="@+id/mapFromLbl"
@@ -29,7 +29,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <AutoCompleteTextView
-        android:id="@+id/locationAutocComplete"
+        android:id="@+id/fromLocationAutoComplete"
         style="@android:style/Widget.AutoCompleteTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,10 +53,10 @@
         android:layout_marginTop="8dp"
         android:text="Travel mode"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/locationAutocComplete" />
+        app:layout_constraintTop_toBottomOf="@+id/fromLocationAutoComplete" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/travelModeSpinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
