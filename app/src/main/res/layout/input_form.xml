@@ -24,13 +24,14 @@
         android:layout_height="wrap_content"
         android:layout_weight="1.90"
         android:text="Distance (in miles)"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="@+id/categoryLbl"
-        android:layout_marginTop="144dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/categoryLbl"
+        app:layout_constraintTop_toBottomOf="@id/categoryDropDown"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/categoryLbl" />
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_marginLeft="7dp"
+        tools:layout_marginStart="7dp" />
 
     <TextView
         android:id="@+id/keywordLbl"
@@ -42,8 +43,7 @@
         android:text="Keyword"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        tools:visibility="visible" />
+        tools:layout_constraintLeft_creator="1" />
 
     <EditText
         android:id="@+id/keywordTxt"
@@ -58,7 +58,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/keywordLbl"
+        app:layout_constraintTop_toBottomOf="@+id/keywordErrorLbl"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1" />
@@ -66,17 +66,17 @@
     <TextView
         android:id="@+id/categoryLbl"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:text="Category"
         tools:layout_constraintTop_creator="1"
-        tools:layout_constraintBottom_creator="1"
+
         android:layout_marginStart="7dp"
-        app:layout_constraintBottom_toBottomOf="@+id/distanceLbl"
-        android:layout_marginTop="53dp"
+
+
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="52dp"
+
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/keywordTxt"
+        app:layout_constraintTop_toBottomOf="@+id/keywordTxt"
         android:layout_marginLeft="7dp" />
 
     <Spinner
@@ -87,8 +87,7 @@
         android:entries="@array/categoryArray"
         android:spinnerMode="dropdown"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/distanceLbl"
+
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintRight_toRightOf="parent"
@@ -106,10 +105,9 @@
         android:id="@+id/distanceTxt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_weight="1"
         android:ems="10"
         android:hint="Enter Distance (default 10 miles)"
         android:inputType="textPersonName"
@@ -119,8 +117,7 @@
         app:layout_constraintTop_toBottomOf="@+id/distanceLbl"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="0dp" />
+        tools:layout_constraintTop_creator="1" />
 
     <RadioGroup
 
@@ -163,8 +160,8 @@
         android:hint="Type in the location"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="@+id/distanceTxt"
-        app:layout_constraintTop_toBottomOf="@+id/fromRadioGroup"
+
+        app:layout_constraintTop_toBottomOf="@id/otherLocationErrorLbl"
         tools:enabled="false" />
 
     <Button
@@ -206,5 +203,25 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/distanceTxt" />
+
+    <TextView
+        android:id="@+id/keywordErrorLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dp"
+        android:text="Please enter mandatory field"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/keywordLbl" />
+
+    <TextView
+        android:id="@+id/otherLocationErrorLbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dp"
+        android:text="Please enter mandatory field"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fromRadioGroup" />
 
 </android.support.constraint.ConstraintLayout>
