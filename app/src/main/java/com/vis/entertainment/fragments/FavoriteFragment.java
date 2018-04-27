@@ -51,6 +51,7 @@ public class FavoriteFragment extends Fragment {
         //resultList = fetchFavFromFile();
         if (resultList.isEmpty()) {
             recyclerView.setVisibility(View.GONE);
+            emptyView.setText("No favorites");
             emptyView.setVisibility(View.VISIBLE);
         } else {
             recyclerView.setVisibility(View.VISIBLE);
