@@ -39,6 +39,15 @@ public class FavoriteFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        resultList.clear();
+        resultList.addAll(ApplicationUtil.retrieveFromSharedPref(sharedPref));
+        resultAdapter.notifyDataSetChanged();
+        displayMsgIfEmpty();
+    }
+
     @SuppressLint("ValidFragment")
     public FavoriteFragment(AppCompatActivity mainActivity) {
         this.mainActivity = mainActivity;
@@ -49,6 +58,11 @@ public class FavoriteFragment extends Fragment {
         View view = inflater.inflate(R.layout.search_or_fav_page, container, false);
         init(view);
         //resultList = fetchFavFromFile();
+        displayMsgIfEmpty();
+        return view;
+    }
+
+    private void displayMsgIfEmpty() {
         if (resultList.isEmpty()) {
             recyclerView.setVisibility(View.GONE);
             emptyView.setText("No favorites");
@@ -57,7 +71,6 @@ public class FavoriteFragment extends Fragment {
             recyclerView.setVisibility(View.VISIBLE);
             emptyView.setVisibility(View.GONE);
         }
-        return view;
     }
 
     private void init(View view) {

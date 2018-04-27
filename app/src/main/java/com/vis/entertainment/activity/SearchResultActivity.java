@@ -45,6 +45,11 @@ public class SearchResultActivity extends AppCompatActivity {
     private ProgressDialog progress;
 
     @Override
+    public void onResume(){
+        super.onResume();
+        resultAdapter.notifyDataSetChanged();
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_or_fav_page);
